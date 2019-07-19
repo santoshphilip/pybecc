@@ -1,2 +1,5 @@
 2019-07-18
 ----------
+
+python3 -m venv ~/venvs/pybecc
+source ~/venvs/pybecc/bin/activate
