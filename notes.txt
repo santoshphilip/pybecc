@@ -3,3 +3,17 @@
 
 python3 -m venv ~/venvs/pybecc
 source ~/venvs/pybecc/bin/activate
+
+
+https://lxml.de/tutorial.html
+https://docs.python.org/3/library/xml.etree.elementtree.html
+https://docs.python.org/3/library/xml.html
+https://www.tutorialspoint.com/python3/python_xml_processing
+https://docs.python-guide.org/scenarios/xml/
+https://github.com/stchris/untangle/blob/master/examples.py
+https://pythonadventures.wordpress.com/2011/10/30/read-xml-painlessly/
+https://eli.thegreenplace.net/2012/03/15/processing-xml-in-python-with-elementtree/
+http://effbot.org/zone/element-xpath.htm
+https://www.tutorialspoint.com/the-elementtree-xml-api-in-python
+https://www.datacamp.com/community/tutorials/python-xml-elementtree
+https://effbot.org/zone/element-index.htm
