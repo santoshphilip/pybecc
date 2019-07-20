@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 from pybecc.pybecc import *
 
 
-fname1 = "/Users/santosh/Documents/coolshadow/github/pybecc/resources/010012-SchSml-CECStd.xml"
+fname1 = "./resources/010012-SchSml-CECStd.xml"
 # fname1 = "/Users/santosh/Dropbox/temp/190715_T24_00-post_open.xml"
 tree = ET.parse(fname1)
 root = tree.getroot()
