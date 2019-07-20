@@ -4,6 +4,7 @@
 
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
+from collections import OrderedDict as od
 
 def getroottag(tree):
     """get the root of the document"""
@@ -42,6 +43,9 @@ def get_tags_childrens_tags(element, tag):
     #     list.append its child tags
     # remove dups
     # return
+    # ----
+    # if tag is the root.tag:
+    #    put element = None
     c_elements = findalltag_children(element, tag)
     alist = []
     for c_element in c_elements:
@@ -51,7 +55,17 @@ def get_tags_childrens_tags(element, tag):
     return tags
     
         
-        
+def get_cbeccdicts(element):
+    """return ordered dicts of the tree. No dups"""
+    def odofchildren(element):
+        if not element:
+            return None
+        etag = element.tag
+        childtags = getchildtags(element)
+        inner_od = od.fromkeys(childtags)
+        return {etag: inner_od}
+    dd = get_cbeccdicts(element)
+    return dd
     
 # get_tags_childrens_tags -> get the tags of all the children that have this tag
 # findalltag_children -> find all childred that have this tag

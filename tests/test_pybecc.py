@@ -6,7 +6,10 @@
 import pytest
 import xml.etree.ElementTree as ET
 from io import StringIO
+from collections import OrderedDict as od
+
 from pybecc import pybecc
+
 
 
 def test_getroot():
@@ -38,7 +41,6 @@ def test_getchildtags():
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
         element = root.find('country')
-        print(element)
         result = pybecc.getchildtags(element)
         assert result == expected
         
@@ -87,10 +89,61 @@ def test_get_tags_childrens_tags():
         element = root
         result = pybecc.get_tags_childrens_tags(element, tag)
         assert result == expected
+    data = (
+    (Tree().treetxt1, 'data', 
+    ['country']),  
+    # treetxt, tag, expected
+    # (Tree().treetxt2, 'country',
+    # ['rank', 'year', 'gdppc', 'neighbor', 'capital']),
+    # # treetxt, tag, expected
+    )
+    for treetxt, tag, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        element = root
+        result = pybecc.get_tags_childrens_tags(element, tag)
+        assert result == expected
+
+
+def test_get_cbeccdicts():
+    """py.test for get_cbeccdicts"""
+    data = (
+    (Tree().treetxt0,
+    od([('data', 
+            od([('country',  None)])
+        )])
+    ),  # treetxt, expected
+    # (Tree().treetxt1,
+    # od([('data',
+    #         od([('country',
+    #             od([('rank', None), ('year',  None), ('neighbor',  None), ('capital',  None)])
+    #         )])
+    #     )])
+    # ),  # treetxt, expected
+    )
+    for treetxt, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        element = root
+        result = pybecc.get_cbeccdicts(element)
+        # print(result)
+        # print(expected)
+        assert result == expected
     
+        
 class Tree(object):
     """holds tree fata for testing"""
     def __init__(self):
+        self.treetxt0 = """<?xml version="1.0"?>
+<data>
+    <country name="Liechtenstein">
+    </country>
+    <country name="Singapore">
+    </country>
+    <country name="Panama">
+    </country>
+</data>"""
+        # -----------------------
         self.treetxt1 = """<?xml version="1.0"?>
 <data>
     <country name="Liechtenstein">
