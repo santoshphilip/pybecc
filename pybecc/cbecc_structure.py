@@ -79,7 +79,7 @@ def getchildtags3(xpath, results,
 
 fname1 = "./resources/010012-SchSml-CECStd.xml"
 # fname1 = "/Users/santosh/Dropbox/temp/190715_T24_00-post_open.xml"
-fname1 = "/Users/santoshphilip/Dropbox/temp/190715_T24_00-post_open.xml"
+# fname1 = "/Users/santoshphilip/Dropbox/temp/190715_T24_00-post_open.xml"
 tree = ET.parse(fname1)
 root = tree.getroot()
 
@@ -89,4 +89,4 @@ res = list()
 # getchildtags1(xpath, res)
 # getchildtags2(xpath, res, uptoindent=1)
 # getchildtags3(xpath, res, uptoindent=None, afterindent=3)
-getchildtags3(xpath, res, fromtag='Bldg', uptoindent=None)
+res = getchildtags3(xpath, res, fromtag='Proj', uptoindent=None)
