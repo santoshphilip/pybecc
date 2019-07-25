@@ -1,3 +1,5 @@
+"""view the xml file. YOu can snip in in different ways. See the args"""
+
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
 # from pybecc import *
@@ -37,13 +39,17 @@ def morechild2(child, ii=0, indent=0, uptoindent=None):
         morechild2(grandchild, i, indent=indent, uptoindent=uptoindent)
 
 
-fname1 = "./resources/010012-SchSml-CECStd.xml"
-# fname1 = "/Users/santosh/Dropbox/temp/190715_T24_00-post_open.xml"
-# fname1 = "/Users/santoshphilip/Dropbox/temp/190715_T24_00-post_open.xml"
-tree = ET.parse(fname1)
-root = tree.getroot()
+def main():
+    fname1 = "./resources/010012-SchSml-CECStd.xml"
+    # fname1 = "/Users/santosh/Dropbox/temp/190715_T24_00-post_open.xml"
+    # fname1 = "/Users/santoshphilip/Dropbox/temp/190715_T24_00-post_open.xml"
+    tree = ET.parse(fname1)
+    root = tree.getroot()
 
 
-# morechild(root)
-# morechild1(root)
-morechild2(root, uptoindent=2)
+    # morechild(root)
+    # morechild1(root)
+    morechild2(root, uptoindent=None)
+
+if __name__ == '__main__':
+    main()
