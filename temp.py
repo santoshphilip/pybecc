@@ -61,6 +61,11 @@ mats = [f for f in found if getcontent(f.find('./Name')) == "Concrete - 140 lb/f
 
 print(mats)
 
+# find Mat, CodeCat="Insulation Board"
+
+xpath = "./Proj/Mat/CodeCat"
+found = root.findall(xpath)
+
 # found = root.findall(xpath)
 # subtag = "Name"
 # childpath = f"{xpath}/{subtag}"
