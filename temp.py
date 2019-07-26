@@ -65,6 +65,8 @@ print(mats)
 
 xpath = "./Proj/Mat/CodeCat"
 found = root.findall(xpath)
+mats = [f for f in found if getcontent(f.find('./Name')) == "Concrete - 140 lb/ft3 - 6 in."]
+
 
 # found = root.findall(xpath)
 # subtag = "Name"
