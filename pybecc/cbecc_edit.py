@@ -31,14 +31,17 @@ def replacefield(elements, field, before=None, after=None):
     Replaces before with after.
     If before=None, replace all the before
     if after=None there are no changes"""
+    # TODO : test fi filed eists
+    # print(field, before, after)
     if after == None:  # cannot use 'not after' -> maybe true for some values
         return elements
     subelements = [element.find(f"./{field}") for element in elements]
     for subelement in subelements:
-        presentvalue = getcontent(subelement)
-        if before == None:  # cannot use 'not before' -> maybe true for some values
-            subelement.text = after
-        else:
-            if presentvalue == before:
+        if subelement:
+            presentvalue = getcontent(subelement)
+            if before == None:  # cannot use 'not before' -> maybe true for some values
                 subelement.text = after
+            else:
+                if presentvalue == before:
+                    subelement.text = after
     return elements

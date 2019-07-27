@@ -80,6 +80,7 @@ def getchildtags3(xpath, results,
 fname1 = "./resources/010012-SchSml-CECStd.xml"
 # fname1 = "/Users/santosh/Dropbox/temp/190715_T24_00-post_open.xml"
 # fname1 = "/Users/santoshphilip/Dropbox/temp/190715_T24_00-post_open.xml"
+fname1 = "/Users/santosh/Dropbox/temp/scratch/workingfile.cibd16x"
 tree = ET.parse(fname1)
 root = tree.getroot()
 
