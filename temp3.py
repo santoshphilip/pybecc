@@ -30,13 +30,18 @@ fname1 = "./resources/010012-SchSml-CECStd.xml"
 tree = ET.parse(fname1)
 root = tree.getroot()
 
-# find xpath, (key, value)
+# find xpath, (key, value) -> get all the lements in xpath and filter by (field, value)
 xpath = "./Proj/Mat"
 key, value = "CodeCat", "Insulation Board"
 
 mats = root.findall(xpath)
 fmats = [mat for mat in mats if getcontent(mat.find(f"./{key}")) == value]
 # fmats = [mat.find(f"./{key}") for mat in mats]
+
+def findelements(element, xpath, fieldvalues= None):
+    """find all the elements in xpath. Filter by filedvalues"""
+    if not fieldvalues:
+        
 
 print(mats)
 print(fmats)

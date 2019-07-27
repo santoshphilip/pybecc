@@ -1,3 +1,31 @@
+2019-07-26
+----------
+
+The program is called "pybecc" :-)
+
+It can do the following things
+- reads the XML file
+- show the structure of the XML file
+   - what are the elements in the tree and their hierarchy 
+   - can view it at different levels of depth 
+   - can view specific objects and the nodes below them
+- View the XML file 
+   - a more human readable view of the xml file
+- Find - DONE
+   - Can find objects using a filter (by name, name-starts_with, type etc.)
+- Replace - DONE
+   - replace fields in a list/group of objects
+- Find and Replace - DONE
+   - The above two functions together makes it a find & replace
+
+Not yet implemented
+- create nodes
+- insert nodes
+- copy and paste
+- sending data from a spreadsheet to an xml file
+
+
+Santosh
 2019-07-18
 ----------
 
