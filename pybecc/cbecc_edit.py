@@ -10,6 +10,17 @@ def getcontent(element):
     return txt
 
 
+# TODO : we need functions for 
+# - delete elements
+# - insert elements
+# see the folowing functions to do this when needed
+# - Element.remove(child)
+# - element.append()
+# - element.extend()
+# - xml.etree.ElementTree.SubElement
+# build this as needed.
+
+
 def getfieldvalue(element, field):
     """rerurn the value of the field"""
     return getcontent(element.find(f"./{field}"))
@@ -36,12 +47,13 @@ def replacefield(elements, field, before=None, after=None):
     if after == None:  # cannot use 'not after' -> maybe true for some values
         return elements
     subelements = [element.find(f"./{field}") for element in elements]
+    subelements =  [sub for sub in subelements if sub is  not None]
     for subelement in subelements:
-        if subelement != None:
-            presentvalue = getcontent(subelement)
-            if before == None:  # cannot use 'not before' -> maybe true for some values
+        # if subelement != None:
+        presentvalue = getcontent(subelement)
+        if before == None:  # cannot use 'not before' -> maybe true for some values
+            subelement.text = after
+        else:
+            if presentvalue == before:
                 subelement.text = after
-            else:
-                if presentvalue == before:
-                    subelement.text = after
     return elements

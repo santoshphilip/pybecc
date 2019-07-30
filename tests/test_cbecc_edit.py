@@ -19,7 +19,7 @@ def test_getcontent():
 def test_findelements():
     """py.test for findelements"""
     data = (
-        (Tree().treetxt1, "./country", None, ["0", "4", "68"]),  # treetxt, xpath, fieldvalues, expected
+        (Tree().treetxt1, "./country", None, ["",  "0", "4", "68"]),  # treetxt, xpath, fieldvalues, expected
         (Tree().treetxt1, "./country", [('rank', '0')], ["0",]),  # treetxt, xpath, fieldvalues, expected
         (Tree().treetxt1, "./country", [('year', '2011')], ["4", "68"]),  # treetxt, xpath, fieldvalues, expected
         (Tree().treetxt1, "./country", [('year', '2011'), ('rank', "68")], ["68"]),  # treetxt, xpath, fieldvalues, expected
@@ -29,18 +29,18 @@ def test_findelements():
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
         foundelements = cbecc_edit.findelements(root, xpath, fieldvalues)
-        result = [item.find("./rank").text for item in foundelements]
+        result = [cbecc_edit.getcontent(item.find("./rank")) for item in foundelements]
         assert result == expected
         
         
 def test_replacefield():
     """py.test for replacefield"""
     data =(
-    (Tree().treetxt1, "./country", "rank", None, "35", ["35", "35", "35"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", "35", ["0", "35", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", None, ["0", "4", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "0", "44", ["44", "4", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", "", ["0", "", "68"]),  # treetxt, xpath, field, before, after, expected
+    (Tree().treetxt1, "./country", "rank", None, "35", ["", "35", "35", "35"]),  # treetxt, xpath, field, before, after, expected
+    (Tree().treetxt1, "./country", "rank", "4", "35", ["", "0", "35", "68"]),  # treetxt, xpath, field, before, after, expected
+    (Tree().treetxt1, "./country", "rank", "4", None, ["", "0", "4", "68"]),  # treetxt, xpath, field, before, after, expected
+    (Tree().treetxt1, "./country", "rank", "0", "44", ["", "44", "4", "68"]),  # treetxt, xpath, field, before, after, expected
+    (Tree().treetxt1, "./country", "rank", "4", "", ["", "0", "", "68"]),  # treetxt, xpath, field, before, after, expected
     )
     for treetxt, xpath, field, before, after, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -54,8 +54,8 @@ def test_replacefield():
 def test_getfieldvalue():
     """py.test for getfieldvalue"""
     data = (
-    (Tree().treetxt1, "./country", 1, "rank", "4"),  # treetxt, xpath, itemindex, field, expected
-    (Tree().treetxt1, "./country", 1, "year", "2011"),  # treetxt, xpath, itemindex, field, expected
+    (Tree().treetxt1, "./country", 2, "rank", "4"),  # treetxt, xpath, itemindex, field, expected
+    (Tree().treetxt1, "./country", 2, "year", "2011"),  # treetxt, xpath, itemindex, field, expected
     )        
     for treetxt, xpath, itemindex, field, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -87,6 +87,12 @@ class Tree(object):
         # -----------------------
         self.treetxt1 = """<?xml version="1.0"?>
 <data>
+    <country name="Liechtenstein">
+        <year>2008</year>
+        <gdppc>141100</gdppc>
+        <neighbor name="Austria" direction="E"/>
+        <neighbor name="Switzerland" direction="W"/>
+    </country>
     <country name="Liechtenstein">
         <rank>0</rank>
         <year>2008</year>
