@@ -37,7 +37,7 @@ def replacefield(elements, field, before=None, after=None):
         return elements
     subelements = [element.find(f"./{field}") for element in elements]
     for subelement in subelements:
-        if subelement:
+        if subelement != None:
             presentvalue = getcontent(subelement)
             if before == None:  # cannot use 'not before' -> maybe true for some values
                 subelement.text = after
