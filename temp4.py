@@ -8,10 +8,12 @@ from pybecc import cbecc_edit
 fname = "/Users/santosh/Dropbox/temp/scratch/workingfile.cibd16x"
 outfile1 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out1.cibd16x"
 outfile2 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out2.cibd16x"
+outfile3 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out3.cibd16x"
+outfile4 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out4.cibd16x"
 # - 
-fname = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile.cibd16x"
-outfile1 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out1.cibd16x"
-outfile2 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out2.cibd16x"
+# fname = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile.cibd16x"
+# outfile1 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out1.cibd16x"
+# outfile2 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out2.cibd16x"
 
 
 # fname1 = "./resources/010012-SchSml-CECStd.xml"
@@ -30,7 +32,7 @@ xpath = "./Proj/Bldg/ThrmlZn"
 thermalzones = cbecc_edit.findelements(root, xpath) 
 
 
-cbecc_edit.replacefield(thermalzones, "PriAirCondgSysRef", after="- none -")
+# cbecc_edit.replacefield(thermalzones, "PriAirCondgSysRef", after="- none -")
 
 
 lines = ['428',
@@ -98,42 +100,17 @@ lines = ['428',
  
 ourzones = []
 for thermalzone in thermalzones:
-    # print(cbecc_edit.getfieldvalue(thermalzone, "Name"))
     for line in lines:
         if cbecc_edit.getfieldvalue(thermalzone, "Name").startswith(line):
             ourzones.append(thermalzone)
 
-cbecc_edit.replacefield(ourzones, "PriAirCondgSysRef", after="- none -")
-cbecc_edit.replacefield(ourzones, "VentSysRef", after="- none -")
-for i, zone in enumerate(ourzones):
-    if i == 3:
-        # print([child.tag for child in zone])
-        child = zone.find("PriAirCondgSysRef")
-        print(child)
-        try:
-            print(child.text)
-        except AttributeError as e:
-            print(f"it is nonetyep -> {child}")
-    if i == 3:
-        break
-    # for c in child:
-    #     # print(child, child.text)
-    #     print(c)
-    #     if c:
-    #         print("yes")
-    #         print(c)
+elements = cbecc_edit.replacefield(ourzones, "PriAirCondgSysRef", after="- none -")
+elements = cbecc_edit.replacefield(ourzones, "VentSysRef", after="- none -")
 
-# tree = ET.ElementTree(root)
+
+
 tree.write(outfile2)
 print(f"wrote: {outfile2}")
-# mydata = ET.tostring(root)
-# myfile = open(outfile2, "w")
-# myfile.write(mydata)
-# ntree = ET.ElementTree(root)
-# ntree.write(open(outfile2, 'w'), encoding='unicode')
 
-# tree = ElementTree.ElementTree()
-# tree._setroot(root)
-# ntree.write(open(outfile2, 'w'), encoding='unicode')
-# # tree.write("sample.xml")
-# # # tree.write(open("a.xml", 'w'), encoding='unicode')
+
+

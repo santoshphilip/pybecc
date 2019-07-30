@@ -50,6 +50,22 @@ def test_replacefield():
         ranks = [element.find("./rank") for element in elements]
         result = [cbecc_edit.getcontent(rank) for rank in ranks]
         assert result == expected
+    # - 
+    # replace a subset of the root  - maybe overkill
+    data =(
+    (Tree().treetxt1, "./country", "rank", None, "35", ["", "35", "35", "68"]),  # treetxt, xpath, field, before, after, expected
+    )
+    for treetxt, xpath, field, before, after, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        elements = root.findall(xpath)
+        elements = elements[1:3]
+        updatedelements = cbecc_edit.replacefield(elements, field, before, after)
+        # grab the elements again, just to make sure
+        elements = root.findall(xpath)
+        ranks = [element.find("./rank") for element in elements]
+        result = [cbecc_edit.getcontent(rank) for rank in ranks]
+        assert result == expected
     
 def test_getfieldvalue():
     """py.test for getfieldvalue"""

@@ -42,14 +42,11 @@ def replacefield(elements, field, before=None, after=None):
     Replaces before with after.
     If before=None, replace all the before
     if after=None there are no changes"""
-    # TODO : test fi filed eists
-    # print(field, before, after)
     if after == None:  # cannot use 'not after' -> maybe true for some values
         return elements
     subelements = [element.find(f"./{field}") for element in elements]
     subelements =  [sub for sub in subelements if sub is  not None]
     for subelement in subelements:
-        # if subelement != None:
         presentvalue = getcontent(subelement)
         if before == None:  # cannot use 'not before' -> maybe true for some values
             subelement.text = after
