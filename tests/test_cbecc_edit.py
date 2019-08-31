@@ -1,5 +1,6 @@
 """py.test for cbecc_edit"""
 
+import pytest
 import xml.etree.ElementTree as ET
 from pybecc import cbecc_edit
 
@@ -15,6 +16,24 @@ def test_getcontent():
         element = root.find(xpath)
         result = cbecc_edit.getcontent(element)
         assert result == expected
+        
+        
+def test_setcontent():
+    """py.test for setcontent"""
+    data = (
+    (Tree().treetxt1, "./country/rank", "32", "32"), # treetxt, xpath, value, expected
+    )
+    for treetxt, xpath, value, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        element = root.find(xpath)
+        cbecc_edit.setcontent(element, value)
+        # get content and see then assert
+        root = tree.getroot()
+        element = root.find(xpath)
+        result = cbecc_edit.getcontent(element)
+        assert result == expected
+        
 
 def test_findelements():
     """py.test for findelements"""
@@ -80,6 +99,26 @@ def test_getfieldvalue():
         element = elements[itemindex]
         result = cbecc_edit.getfieldvalue(element, field)
         assert result == expected
+        
+        
+def test_setfieldvalue():
+    """py.test for setfieldvalue"""
+    data = (
+    (Tree().treetxt1, "./country", 2, "rank", "42", "42"), # treetxt, xpath, itemindex, field, value, expected
+    (Tree().treetxt1, "./country", 2, "year", "1969", "1969"), # treetxt, xpath, itemindex, field, value, expected
+    )        
+    for treetxt, xpath, itemindex, field, value, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        elements = root.findall(xpath)
+        element = elements[itemindex]
+        cbecc_edit.setfieldvalue(element, field, value)
+        # recover the value from root
+        elements = root.findall(xpath)
+        element = elements[itemindex]
+        result = cbecc_edit.getfieldvalue(element, field)
+        assert result == expected
+        
         
 
 class Tree(object):

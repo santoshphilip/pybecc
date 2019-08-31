@@ -9,7 +9,14 @@ def getcontent(element):
         txt = ""
     return txt
 
-
+def setcontent(element, value):
+    """set the content of that element to value"""
+    try:
+        element.text = value
+    except AttributeError as e:
+        raise AttributeError(f"no such element - cannot set value")
+    
+    
 # TODO : we need functions for 
 # - delete elements
 # - insert elements
@@ -22,8 +29,12 @@ def getcontent(element):
 
 
 def getfieldvalue(element, field):
-    """rerurn the value of the field"""
+    """return the value of the field in element"""
     return getcontent(element.find(f"./{field}"))
+    
+def setfieldvalue(element, field, value):
+    """in element, set the value of the filed to 'value' """
+    return setcontent(element.find(f"./{field}"), value)    
 
 def findelements(element, xpath=None, fieldvalues=None):
     """starting from element, find xpath elements and filter by fieldvalues"""

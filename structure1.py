@@ -1,9 +1,11 @@
+"""print out the structure of the cbecc file
+Gives the full pathname - usefil for getting elements or objects"""
+# copied from structure.py
 
 import xml.etree.ElementTree as ET
-# from pybecc.pybecc import *
 import pybecc.pybecc as pybecc
 
-def printstuff(newtags, prevelement, ii, level, goto):
+def printstuff1(newtags, prevelement, ii, level, goto, pre):
     if level > goto+2:
         return None, None
     basetag = newtags[ii]
@@ -13,14 +15,21 @@ def printstuff(newtags, prevelement, ii, level, goto):
     tags = lowertags
     tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
     inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
-    print(tab * level, f"{level}.{ii:03d}", basetag)
+    printthis = f"{pre}/{basetag}"
+    length = len(printthis.split('/')) -1
+    print(tab * level, f"{level}.{ii:03d}", printthis, length, end='  --out\n')
+    fullpath = pre
     for i, tag, childtags in inbase:
-        print(tab * (level+1), f"{level+1}.{i:03d}", tag)
+        printhis = f"{pre}/{basetag}/{tag}"
+        length = len(printthis.split('/')) -1
+        print(tab * (level+1), f"{level+1}.{i:03d}", printthis, length, end='  --in\n')
+        fullpath = printthis
         for k, childtag in enumerate(childtags):
-            printstuff(childtags, baseelement.find(tag), k, level+2, goto)
+            printstuff(childtags, baseelement.find(tag), k, level+2, goto, fullpath)
+    pre = fullpath
     return lowertags, baseelement
 
-def printfilteredstuff(newtags, prevelement, ii, level, goto=500, tagfrom=None):
+def printstuff(newtags, prevelement, ii, level, goto, pre):
     if level > goto+2:
         return None, None
     basetag = newtags[ii]
@@ -30,19 +39,15 @@ def printfilteredstuff(newtags, prevelement, ii, level, goto=500, tagfrom=None):
     tags = lowertags
     tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
     inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
-    if not tagfrom:
-        print(tab * level, f"{level}.{ii:03d}", basetag)
-    elif tagfrom == basetag:
-        print(tab * level, f"{level}.{ii:03d}", basetag)
+    printthis =  f"{pre}/{basetag}"
+    length = len(printthis.split('/')) -1
+    print(tab * level, f"{level}.{ii:03d}", printthis, length)
     for i, tag, childtags in inbase:
-        ntagfrom = tagfrom
-        if not tagfrom:
-            print(tab * (level+1), f"{level+1}.{i:03d}", tag)
-        elif tagfrom == basetag:
-            print(tab * (level+1), f"{level+1}.{i:03d}", tag)
-            ntagfrom = None
+        printthis = f"{pre}/{basetag}/{tag}"
+        length = len(printthis.split('/')) -1
+        print(tab * (level+1), f"{level+1}.{i:03d}", printthis, length)
         for k, childtag in enumerate(childtags):
-            printfilteredstuff(childtags, baseelement.find(tag), k, level+2, goto=goto, tagfrom=ntagfrom)
+            printstuff(childtags, baseelement.find(tag), k, level+2, goto, f"{pre}/{basetag}/{tag}")
     return lowertags, baseelement
 
 
@@ -52,47 +57,24 @@ fname1 = "/Users/santosh/Documents/coolshadow/HOK_O_Street/simulation/O_street_w
 tree = ET.parse(fname1)
 root = tree.getroot()
 l1_tags = pybecc.getchildtags(root)
-l1_childtags = [(tag, pybecc.get_tags_childrens_tags(root, tag)) for tag in l1_tags]
-# print(l1_tags)
-# print(l1_childtags)
-# print("=")
-for l1_tag in l1_tags:
-    prevelement = root.find(l1_tag)
-    childtags = pybecc.get_tags_childrens_tags(root, l1_tag)
-    print(l1_tag)
-    for i in range(len(childtags)):
-        level = 0
-        tagfrom = None
-        # tagfrom = 'FluidSys'
-        tagfrom = 'ThrmlZn'
-        lowertags, baseelement = printfilteredstuff(childtags, prevelement, i, level, 700, tagfrom=tagfrom)
-        
-
 
 tab = "  "
 level = 0
 prevelement = root
 basetag = l1_tags[1]
-# --
+# print(basetag)
+# # --
 baseelement = prevelement.find(basetag)
 lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
 tags = lowertags
 tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
 inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
-print(tab * level, f"{level}.{0}", basetag)
+print(tab * level, f"{level}.{0}", basetag, end='  --mail\n')
 for i, tag, childtags in inbase:
-    print(tab * (level+1), f"{level+1}.{i}", tag)
+    pre = f"{basetag}/{tag}"
+    # print(pre, "\n", end="")
+    printthis = pre
+    length = len(printthis.split('/')) -1
+    print(tab * (level+1), f"{level+1}.{i}", printthis,  length)
     for k, childtag in enumerate(childtags):
-        printstuff(childtags, baseelement.find(tag), k, level+3, 1)
-
-
-
-
-newtags = lowertags
-prevelement = baseelement
-level = 1
-
-for i in range(0, len(lowertags)):
-    lowertags, baseelement = printstuff(newtags, prevelement, i, level, 1)
-    # print("=" * 23)
-
+        printstuff(childtags, baseelement.find(tag), k, level+2, 10, pre)
