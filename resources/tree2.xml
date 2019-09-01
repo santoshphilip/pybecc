@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<data>
+    <country name="Liechtenstein">
+        <rank>1</rank>
+        <year>2008</year>
+        <gdppc>
+            1300
+        </gdppc>
+        <neighbor name="Austria" direction="E"/>
+        <neighbor name="Switzerland" direction="W"/>
+    </country>
+    <country name="Singapore">
+        <rank>4</rank>
+        <year>2011</year>
+        <gdppc>
+            1300
+            <inner_gdppc>13600</inner_gdppc>
+        </gdppc>
+        <neighbor name="Malaysia" direction="N"/>
+    </country>
+    <country name="Panama">
+        <rank>68</rank>
+        <year>2011</year>
+        <Month>January</Month>
+        <gdppc>
+            1300
+            <inner_gdppc>
+                13600
+                <inner1_gdppc>
+                    13600
+                    <inner2_gdppc>
+                        13600
+                        <inner3_gdppc>
+                            13600
+                            <inner4_gdppc>
+                                13600
+                            </inner4_gdppc>
+                        </inner3_gdppc>
+                    </inner2_gdppc>
+                </inner1_gdppc>
+            </inner_gdppc>
+        </gdppc>
+        <neighbor name="Costa Rica" direction="W"/>
+        <neighbor name="Colombia" direction="E"/>
+    </country>
+    <country name="Panama">
+        <rank>68</rank>
+        <year>2011</year>
+        <Month>January</Month>
+        <gdppc>
+            1300
+            <inner0_gdppc>
+                13600
+                <inner1_gdppc>
+                    13600
+                    <inner11_gdppc>
+                        13600
+                        <inner111_gdppc>
+                            13600
+                        </inner111_gdppc>
+                    </inner11_gdppc>
+                </inner1_gdppc>
+            </inner0_gdppc>
+        </gdppc>
+        <neighbor name="Costa Rica" direction="W"/>
+        <neighbor name="Colombia" direction="E"/>
+    </country>
+</data>
