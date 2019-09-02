@@ -2,7 +2,9 @@
 
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
+
 # from pybecc import *
+
 
 def morechild(child):
     try:
@@ -12,6 +14,7 @@ def morechild(child):
     print(f"{child.tag:<20} = {txt}")
     for grandchild in child:
         morechild(grandchild)
+
 
 def morechild1(child, ii=0, indent=0):
     tab = "  " * indent
@@ -23,6 +26,7 @@ def morechild1(child, ii=0, indent=0):
     indent += 1
     for i, grandchild in enumerate(child):
         morechild1(grandchild, i, indent=indent)
+
 
 def morechild2(child, ii=0, indent=0, uptoindent=None):
     if uptoindent:
@@ -46,10 +50,10 @@ def main():
     tree = ET.parse(fname1)
     root = tree.getroot()
 
-
     # morechild(root)
     # morechild1(root)
     morechild2(root, uptoindent=None)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

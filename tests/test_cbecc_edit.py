@@ -4,6 +4,7 @@ import pytest
 import xml.etree.ElementTree as ET
 from pybecc import cbecc_edit
 
+
 def test_getcontent():
     """py.test for getcontent"""
     data = (
@@ -16,12 +17,17 @@ def test_getcontent():
         element = root.find(xpath)
         result = cbecc_edit.getcontent(element)
         assert result == expected
-        
-        
+
+
 def test_setcontent():
     """py.test for setcontent"""
     data = (
-    (Tree().treetxt1, "./country/rank", "32", "32"), # treetxt, xpath, value, expected
+        (
+            Tree().treetxt1,
+            "./country/rank",
+            "32",
+            "32",
+        ),  # treetxt, xpath, value, expected
     )
     for treetxt, xpath, value, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -33,16 +39,36 @@ def test_setcontent():
         element = root.find(xpath)
         result = cbecc_edit.getcontent(element)
         assert result == expected
-        
+
 
 def test_findelements():
     """py.test for findelements"""
     data = (
-        (Tree().treetxt1, "./country", None, ["",  "0", "4", "68"]),  # treetxt, xpath, fieldvalues, expected
-        (Tree().treetxt1, "./country", [('rank', '0')], ["0",]),  # treetxt, xpath, fieldvalues, expected
-        (Tree().treetxt1, "./country", [('year', '2011')], ["4", "68"]),  # treetxt, xpath, fieldvalues, expected
-        (Tree().treetxt1, "./country", [('year', '2011'), ('rank', "68")], ["68"]),  # treetxt, xpath, fieldvalues, expected
-        (Tree().treetxtm1, None, None, ["68", ]),  # treetxt, xpath, fieldvalues, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            None,
+            ["", "0", "4", "68"],
+        ),  # treetxt, xpath, fieldvalues, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            [("rank", "0")],
+            ["0"],
+        ),  # treetxt, xpath, fieldvalues, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            [("year", "2011")],
+            ["4", "68"],
+        ),  # treetxt, xpath, fieldvalues, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            [("year", "2011"), ("rank", "68")],
+            ["68"],
+        ),  # treetxt, xpath, fieldvalues, expected
+        (Tree().treetxtm1, None, None, ["68"]),  # treetxt, xpath, fieldvalues, expected
     )
     for treetxt, xpath, fieldvalues, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -50,16 +76,51 @@ def test_findelements():
         foundelements = cbecc_edit.findelements(root, xpath, fieldvalues)
         result = [cbecc_edit.getcontent(item.find("./rank")) for item in foundelements]
         assert result == expected
-        
-        
+
+
 def test_replacefield():
     """py.test for replacefield"""
-    data =(
-    (Tree().treetxt1, "./country", "rank", None, "35", ["", "35", "35", "35"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", "35", ["", "0", "35", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", None, ["", "0", "4", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "0", "44", ["", "44", "4", "68"]),  # treetxt, xpath, field, before, after, expected
-    (Tree().treetxt1, "./country", "rank", "4", "", ["", "0", "", "68"]),  # treetxt, xpath, field, before, after, expected
+    data = (
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            None,
+            "35",
+            ["", "35", "35", "35"],
+        ),  # treetxt, xpath, field, before, after, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            "4",
+            "35",
+            ["", "0", "35", "68"],
+        ),  # treetxt, xpath, field, before, after, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            "4",
+            None,
+            ["", "0", "4", "68"],
+        ),  # treetxt, xpath, field, before, after, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            "0",
+            "44",
+            ["", "44", "4", "68"],
+        ),  # treetxt, xpath, field, before, after, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            "4",
+            "",
+            ["", "0", "", "68"],
+        ),  # treetxt, xpath, field, before, after, expected
     )
     for treetxt, xpath, field, before, after, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -69,10 +130,17 @@ def test_replacefield():
         ranks = [element.find("./rank") for element in elements]
         result = [cbecc_edit.getcontent(rank) for rank in ranks]
         assert result == expected
-    # - 
+    # -
     # replace a subset of the root  - maybe overkill
-    data =(
-    (Tree().treetxt1, "./country", "rank", None, "35", ["", "35", "35", "68"]),  # treetxt, xpath, field, before, after, expected
+    data = (
+        (
+            Tree().treetxt1,
+            "./country",
+            "rank",
+            None,
+            "35",
+            ["", "35", "35", "68"],
+        ),  # treetxt, xpath, field, before, after, expected
     )
     for treetxt, xpath, field, before, after, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -85,13 +153,26 @@ def test_replacefield():
         ranks = [element.find("./rank") for element in elements]
         result = [cbecc_edit.getcontent(rank) for rank in ranks]
         assert result == expected
-    
+
+
 def test_getfieldvalue():
     """py.test for getfieldvalue"""
     data = (
-    (Tree().treetxt1, "./country", 2, "rank", "4"),  # treetxt, xpath, itemindex, field, expected
-    (Tree().treetxt1, "./country", 2, "year", "2011"),  # treetxt, xpath, itemindex, field, expected
-    )        
+        (
+            Tree().treetxt1,
+            "./country",
+            2,
+            "rank",
+            "4",
+        ),  # treetxt, xpath, itemindex, field, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            2,
+            "year",
+            "2011",
+        ),  # treetxt, xpath, itemindex, field, expected
+    )
     for treetxt, xpath, itemindex, field, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
@@ -99,14 +180,28 @@ def test_getfieldvalue():
         element = elements[itemindex]
         result = cbecc_edit.getfieldvalue(element, field)
         assert result == expected
-        
-        
+
+
 def test_setfieldvalue():
     """py.test for setfieldvalue"""
     data = (
-    (Tree().treetxt1, "./country", 2, "rank", "42", "42"), # treetxt, xpath, itemindex, field, value, expected
-    (Tree().treetxt1, "./country", 2, "year", "1969", "1969"), # treetxt, xpath, itemindex, field, value, expected
-    )        
+        (
+            Tree().treetxt1,
+            "./country",
+            2,
+            "rank",
+            "42",
+            "42",
+        ),  # treetxt, xpath, itemindex, field, value, expected
+        (
+            Tree().treetxt1,
+            "./country",
+            2,
+            "year",
+            "1969",
+            "1969",
+        ),  # treetxt, xpath, itemindex, field, value, expected
+    )
     for treetxt, xpath, itemindex, field, value, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
@@ -118,11 +213,11 @@ def test_setfieldvalue():
         element = elements[itemindex]
         result = cbecc_edit.getfieldvalue(element, field)
         assert result == expected
-        
-        
+
 
 class Tree(object):
     """holds tree fata for testing"""
+
     def __init__(self):
         self.treetxtm1 = """<?xml version="1.0"?>
 <data>
@@ -201,4 +296,4 @@ class Tree(object):
         <neighbor name="Kochi" direction="W"/>
         <neighbor name="Madurai" direction="S"/>
     </city>
-</data>"""        
+</data>"""

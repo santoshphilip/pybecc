@@ -6,10 +6,13 @@ import xml.etree.ElementTree as ET
 
 from pybecc import cbecc_structure
 
+
 def test_structure():
     """py.test for structure"""
-    data = ((Tree().treetxt1,
-    """0.000. country
+    data = (
+        (
+            Tree().treetxt1,
+            """0.000. country
   1.000. rank
   1.001. year
   1.002. gdppc
@@ -24,8 +27,8 @@ def test_structure():
           5.000. inner111_gdppc
   1.003. neighbor
   1.004. Month
-"""
-    ),  # treetxt, expected
+""",
+        ),  # treetxt, expected
     )
     for treetxt, expected in data:
         tree = ET.parse(StringIO(treetxt))
@@ -35,12 +38,13 @@ def test_structure():
         result = fhandle.getvalue()
         assert expected == result
 
+
 def test_structurepath():
     """py.test for structurepath"""
     data = (
-    (
-    Tree().treetxt1,
-    """0.000. ./country
+        (
+            Tree().treetxt1,
+            """0.000. ./country
   1.000. ./country/rank
   1.001. ./country/year
   1.002. ./country/gdppc
@@ -55,8 +59,8 @@ def test_structurepath():
           5.000. ./country/gdppc/inner0_gdppc/inner1_gdppc/inner11_gdppc/inner111_gdppc
   1.003. ./country/neighbor
   1.004. ./country/Month
-"""
-    ), # treetxt, expected
+""",
+        ),  # treetxt, expected
     )
     for treetxt, expected in data:
         tree = ET.parse(StringIO(treetxt))
@@ -65,10 +69,11 @@ def test_structurepath():
         cbecc_structure.structurepath(root, thefile=fhandle)
         result = fhandle.getvalue()
         assert expected == result
-    
-        
+
+
 class Tree(object):
     """holds the data for testing"""
+
     def __init__(self):
         self.treetxt1 = """<?xml version="1.0"?>
 <data>

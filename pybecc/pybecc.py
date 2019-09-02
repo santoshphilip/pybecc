@@ -6,35 +6,41 @@ import xml.etree.ElementTree as ET
 from collections import OrderedDict
 from collections import OrderedDict as od
 
+
 def getroottag(tree):
     """get the root of the document"""
     root = tree.getroot()
     return root.tag
-    
+
+
 def getlevel1_tags(root):
     """get all tags for level below root without dups - maintain order"""
-    childs = [child.tag for child in root]    
+    childs = [child.tag for child in root]
     # prunechilds = set(childs)
     # cant use set, since I want to preserve order
     l1tags = list(OrderedDict.fromkeys(childs))
     return l1tags
-    
+
+
 def getchildtags(element):
     """get tags at child level without dups - maintain order"""
-    childs = [child.tag for child in element]    
+    childs = [child.tag for child in element]
     # prunechilds = set(childs)
     # cant use set, since I want to preserve order
     childtags = list(OrderedDict.fromkeys(childs))
     return childtags
-    
+
+
 def getallchildren(element):
     """get all the children of the element"""
-    return [child for child in element]    
+    return [child for child in element]
+
 
 def findalltag_children(element, tag):
     """find all children that have this tag"""
     return element.findall(tag)
-    
+
+
 def get_tags_childrens_tags(element, tag):
     """get the tags of all the children that have this tag with no dups
     - retain the order"""
@@ -53,10 +59,11 @@ def get_tags_childrens_tags(element, tag):
             alist.append(child.tag)
     tags = list(OrderedDict.fromkeys(alist))
     return tags
-    
-        
+
+
 def get_cbeccdicts(element):
     """return ordered dicts of the tree. No dups"""
+
     def odofchildren(element):
         if not element:
             return None
@@ -64,8 +71,10 @@ def get_cbeccdicts(element):
         childtags = getchildtags(element)
         inner_od = od.fromkeys(childtags)
         return {etag: inner_od}
+
     dd = get_cbeccdicts(element)
     return dd
-    
+
+
 # get_tags_childrens_tags -> get the tags of all the children that have this tag
 # findalltag_children -> find all childred that have this tag

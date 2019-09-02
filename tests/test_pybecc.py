@@ -11,21 +11,20 @@ from collections import OrderedDict as od
 from pybecc import pybecc
 
 
-
 def test_getroot():
     """py.test for getroot"""
-    data = ((Tree().treetxt1, "data"),  # treetxt, expected
-    )
+    data = ((Tree().treetxt1, "data"),)  # treetxt, expected
     for treetxt, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         result = pybecc.getroottag(tree)
         assert result == expected
-        
+
+
 def test_getlevel1_tags():
     """py.test for getlevel1_tags"""
     data = (
-        (Tree().treetxt1, ['country']),  # treetxt, expected
-        (Tree().treetxt2, ['country', 'city']),  # treetxt, expected
+        (Tree().treetxt1, ["country"]),  # treetxt, expected
+        (Tree().treetxt2, ["country", "city"]),  # treetxt, expected
     )
     for treetxt, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -33,38 +32,37 @@ def test_getlevel1_tags():
         result = pybecc.getlevel1_tags(root)
         assert result == expected
 
+
 def test_getchildtags():
     """py.test for getchildtags"""
-    data = ((Tree().treetxt1, ['rank', 'year', 'gdppc', 'neighbor']),  # treetxt, expected
+    data = (
+        (Tree().treetxt1, ["rank", "year", "gdppc", "neighbor"]),  # treetxt, expected
     )
     for treetxt, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
-        element = root.find('country')
+        element = root.find("country")
         result = pybecc.getchildtags(element)
         assert result == expected
-        
+
+
 def test_getallchildren():
     """py.test for getallchildren"""
-    data = (
-    (Tree().treetxt1, ['country', 'country', 'country']),  # treetxt, expected
-    )        
+    data = ((Tree().treetxt1, ["country", "country", "country"]),)  # treetxt, expected
     for treetxt, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         element = tree.getroot()
         result = pybecc.getallchildren(element)
         assert [item.tag for item in result] == expected
-        
+
 
 def test_findalltag_children():
     """py.test for findalltag_children"""
     data = (
-    (Tree().treetxt1, 'country', 
-    ['country', 'country', 'country']),  
-    # treetxt, tag, expected
-    (Tree().treetxt2, 'country', 
-    ['country', 'country', 'country']),  
-    # treetxt, tag, expected
+        (Tree().treetxt1, "country", ["country", "country", "country"]),
+        # treetxt, tag, expected
+        (Tree().treetxt2, "country", ["country", "country", "country"]),
+        # treetxt, tag, expected
     )
     for treetxt, tag, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -73,15 +71,14 @@ def test_findalltag_children():
         result = pybecc.findalltag_children(element, tag)
         assert [item.tag for item in result] == expected
 
+
 def test_get_tags_childrens_tags():
     """py.test for get_tags_childrens_tags"""
     data = (
-    (Tree().treetxt1, 'country', 
-    ['rank', 'year', 'gdppc', 'neighbor', 'capital']),  
-    # treetxt, tag, expected
-    (Tree().treetxt2, 'country', 
-    ['rank', 'year', 'gdppc', 'neighbor', 'capital']),  
-    # treetxt, tag, expected
+        (Tree().treetxt1, "country", ["rank", "year", "gdppc", "neighbor", "capital"]),
+        # treetxt, tag, expected
+        (Tree().treetxt2, "country", ["rank", "year", "gdppc", "neighbor", "capital"]),
+        # treetxt, tag, expected
     )
     for treetxt, tag, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -90,12 +87,11 @@ def test_get_tags_childrens_tags():
         result = pybecc.get_tags_childrens_tags(element, tag)
         assert result == expected
     data = (
-    (Tree().treetxt1, 'data', 
-    ['country']),  
-    # treetxt, tag, expected
-    # (Tree().treetxt2, 'country',
-    # ['rank', 'year', 'gdppc', 'neighbor', 'capital']),
-    # # treetxt, tag, expected
+        (Tree().treetxt1, "data", ["country"]),
+        # treetxt, tag, expected
+        # (Tree().treetxt2, 'country',
+        # ['rank', 'year', 'gdppc', 'neighbor', 'capital']),
+        # # treetxt, tag, expected
     )
     for treetxt, tag, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -132,10 +128,11 @@ def test_get_tags_childrens_tags():
 #         # print(result)
 #         # print(expected)
 #         assert result == expected
-    
-        
+
+
 class Tree(object):
     """holds tree fata for testing"""
+
     def __init__(self):
         self.treetxt0 = """<?xml version="1.0"?>
 <data>
@@ -202,4 +199,4 @@ class Tree(object):
         <neighbor name="Kochi" direction="W"/>
         <neighbor name="Madurai" direction="S"/>
     </city>
-</data>"""    
+</data>"""

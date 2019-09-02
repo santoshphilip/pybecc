@@ -3,5 +3,5 @@
 """Top-level package for pybecc."""
 
 __author__ = """Santosh Philip"""
-__email__ = 'noemail@noemail.com'
-__version__ = '0.1.0'
+__email__ = "noemail@noemail.com"
+__version__ = "0.1.0"

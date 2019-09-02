@@ -2,18 +2,22 @@
 
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
+
 # from pybecc import *
+
 
 def removedups(childs):
     """remove dups and retain order"""
     return list(OrderedDict.fromkeys(childs))
-    
+
+
 def getcontent(element):
     try:
         txt = element.text.strip()
     except AttributeError as e:
         txt = ""
     return txt
+
 
 def getcontent1(xpath):
     childtags = removedups([item.tag for item in root.findall(xpath)])
@@ -57,7 +61,9 @@ mats = [getcontent(f) for f in found]
 childtags = removedups([item.tag for item in root.findall(xpath)])
 print(childtags)
 
-mats = [f for f in found if getcontent(f.find('./Name')) == "Concrete - 140 lb/ft3 - 6 in."]
+mats = [
+    f for f in found if getcontent(f.find("./Name")) == "Concrete - 140 lb/ft3 - 6 in."
+]
 
 print(mats)
 
@@ -65,7 +71,9 @@ print(mats)
 
 xpath = "./Proj/Mat/CodeCat"
 found = root.findall(xpath)
-mats = [f for f in found if getcontent(f.find('./Name')) == "Concrete - 140 lb/ft3 - 6 in."]
+mats = [
+    f for f in found if getcontent(f.find("./Name")) == "Concrete - 140 lb/ft3 - 6 in."
+]
 
 
 # found = root.findall(xpath)

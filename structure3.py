@@ -12,7 +12,7 @@ fname1 = "/Users/santoshphilip/Dropbox/coolshadow_dropbox/doe2eppystuff/eplusfil
 tree = ET.parse(fname1)
 root = tree.getroot()
 
-xpath = './'
+xpath = "./"
 res = list()
 # getchildtags(xpath, res)
 # getchildtags1(xpath, res)

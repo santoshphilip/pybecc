@@ -1,7 +1,6 @@
 """functions to edit a cbecc file"""
 
 
-
 def getcontent(element):
     try:
         txt = element.text.strip()
@@ -9,15 +8,16 @@ def getcontent(element):
         txt = ""
     return txt
 
+
 def setcontent(element, value):
     """set the content of that element to value"""
     try:
         element.text = value
     except AttributeError as e:
         raise AttributeError(f"no such element - cannot set value")
-    
-    
-# TODO : we need functions for 
+
+
+# TODO : we need functions for
 # - delete elements
 # - insert elements
 # see the folowing functions to do this when needed
@@ -31,10 +31,12 @@ def setcontent(element, value):
 def getfieldvalue(element, field):
     """return the value of the field in element"""
     return getcontent(element.find(f"./{field}"))
-    
+
+
 def setfieldvalue(element, field, value):
     """in element, set the value of the filed to 'value' """
-    return setcontent(element.find(f"./{field}"), value)    
+    return setcontent(element.find(f"./{field}"), value)
+
 
 def findelements(element, xpath=None, fieldvalues=None):
     """starting from element, find xpath elements and filter by fieldvalues"""
@@ -44,9 +46,11 @@ def findelements(element, xpath=None, fieldvalues=None):
         xpath = "."
     filtered = element.findall(xpath)
     for field, value in fieldvalues:
-        filtered = [item for item in filtered if getcontent(item.find(f"./{field}")) == value]
+        filtered = [
+            item for item in filtered if getcontent(item.find(f"./{field}")) == value
+        ]
     return filtered
-        
+
 
 def replacefield(elements, field, before=None, after=None):
     """replaces the value in field. 
@@ -56,7 +60,7 @@ def replacefield(elements, field, before=None, after=None):
     if after == None:  # cannot use 'not after' -> maybe true for some values
         return elements
     subelements = [element.find(f"./{field}") for element in elements]
-    subelements =  [sub for sub in subelements if sub is  not None]
+    subelements = [sub for sub in subelements if sub is not None]
     for subelement in subelements:
         presentvalue = getcontent(subelement)
         if before == None:  # cannot use 'not before' -> maybe true for some values

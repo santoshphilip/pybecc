@@ -12,7 +12,7 @@ outfile1 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out1.cibd16x"
 outfile2 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out2.cibd16x"
 outfile3 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out3.cibd16x"
 outfile4 = "/Users/santosh/Dropbox/temp/scratch/workingfile_out4.cibd16x"
-# - 
+# -
 # fname = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile.cibd16x"
 # outfile1 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out1.cibd16x"
 # outfile2 = "/Users/santoshphilip/Dropbox/temp/scratch/workingfile_out2.cibd16x"
@@ -26,7 +26,7 @@ print(f"read {fname}")
 root = tree.getroot()
 
 xpath = "./Proj/Bldg/ThrmlZn"
-thermalzones = cbecc_edit.findelements(root, xpath) 
+thermalzones = cbecc_edit.findelements(root, xpath)
 
 
 indzones = []
@@ -51,5 +51,3 @@ for n1, n2 in syszones:
 
 # tree.write(outfile2)
 # print(f"wrote: {outfile2}")
-
-

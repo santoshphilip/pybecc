@@ -3,8 +3,9 @@
 import xml.etree.ElementTree as ET
 import pybecc.pybecc as pybecc
 
+
 def printstuff(newtags, prevelement, ii, level, goto):
-    if level > goto+2:
+    if level > goto + 2:
         return None, None
     basetag = newtags[ii]
     tab = "  "
@@ -12,12 +13,15 @@ def printstuff(newtags, prevelement, ii, level, goto):
     lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
     tags = lowertags
     tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
-    inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
+    inbase = [
+        (i, tag, pybecc.get_tags_childrens_tags(baseelement, tag))
+        for (i, tag) in enumerate(tags)
+    ]
     print(tab * level, f"{level}.{ii:03d}", basetag)
     for i, tag, childtags in inbase:
-        print(tab * (level+1), f"{level+1}.{i:03d}", tag)
+        print(tab * (level + 1), f"{level+1}.{i:03d}", tag)
         for k, childtag in enumerate(childtags):
-            printstuff(childtags, baseelement.find(tag), k, level+2, goto)
+            printstuff(childtags, baseelement.find(tag), k, level + 2, goto)
     return lowertags, baseelement
 
 
@@ -37,9 +41,12 @@ baseelement = prevelement.find(basetag)
 lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
 tags = lowertags
 tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
-inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
+inbase = [
+    (i, tag, pybecc.get_tags_childrens_tags(baseelement, tag))
+    for (i, tag) in enumerate(tags)
+]
 print(tab * level, f"{level}.{0}", basetag)
 for i, tag, childtags in inbase:
-    print(tab * (level+1), f"{level+1}.{i}", tag)
+    print(tab * (level + 1), f"{level+1}.{i}", tag)
     for k, childtag in enumerate(childtags):
-        printstuff(childtags, baseelement.find(tag), k, level+2, 1)
+        printstuff(childtags, baseelement.find(tag), k, level + 2, 1)

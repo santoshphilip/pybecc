@@ -1,20 +1,27 @@
 import sys
 import xml.etree.ElementTree as ET
 from collections import OrderedDict
-# from pybecc import *
 
+# from pybecc import *
 
 
 def removedups(childs):
     """remove dups and retain order"""
     return list(OrderedDict.fromkeys(childs))
-    
 
-def structure(root, xpath=None, results=None, 
-                  indent=0, uptoindent=None, 
-                  afterindent=None, fromtag=None, thefile=None):
+
+def structure(
+    root,
+    xpath=None,
+    results=None,
+    indent=0,
+    uptoindent=None,
+    afterindent=None,
+    fromtag=None,
+    thefile=None,
+):
     if xpath is None:
-        xpath = './'
+        xpath = "./"
     if results is None:
         results = list()
     if thefile is None:
@@ -41,18 +48,33 @@ def structure(root, xpath=None, results=None,
         else:
             print(f"{tab}{indent - 1}.{i:003}. {childtag}", file=thefile)
         nxpath = f"{xpath}{childtag}/"
-        structure(root, nxpath, results, 
-                      indent=indent, uptoindent=uptoindent,     
-                      afterindent=afterindent, fromtag=fromtag, thefile=thefile)
+        structure(
+            root,
+            nxpath,
+            results,
+            indent=indent,
+            uptoindent=uptoindent,
+            afterindent=afterindent,
+            fromtag=fromtag,
+            thefile=thefile,
+        )
         if breakhere:
             break
 
-def structurepath(root, xpath=None, results=None, 
-                  indent=0, uptoindent=None, 
-                  afterindent=None, fromtag=None, thefile=None,
-                  pre=None):
+
+def structurepath(
+    root,
+    xpath=None,
+    results=None,
+    indent=0,
+    uptoindent=None,
+    afterindent=None,
+    fromtag=None,
+    thefile=None,
+    pre=None,
+):
     if xpath is None:
-        xpath = './'
+        xpath = "./"
     if results is None:
         results = list()
     if thefile is None:
@@ -82,9 +104,16 @@ def structurepath(root, xpath=None, results=None,
         else:
             print(f"{tab}{indent - 1}.{i:003}. {printthis}", file=thefile)
         nxpath = f"{xpath}{childtag}/"
-        structurepath(root, nxpath, results, 
-                      indent=indent, uptoindent=uptoindent,     
-                      afterindent=afterindent, fromtag=fromtag, thefile=thefile, pre=printthis)
+        structurepath(
+            root,
+            nxpath,
+            results,
+            indent=indent,
+            uptoindent=uptoindent,
+            afterindent=afterindent,
+            fromtag=fromtag,
+            thefile=thefile,
+            pre=printthis,
+        )
         if breakhere:
             break
-

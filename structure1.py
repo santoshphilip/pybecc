@@ -5,8 +5,9 @@ Gives the full pathname - usefil for getting elements or objects"""
 import xml.etree.ElementTree as ET
 import pybecc.pybecc as pybecc
 
+
 def printstuff1(newtags, prevelement, ii, level, goto, pre):
-    if level > goto+2:
+    if level > goto + 2:
         return None, None
     basetag = newtags[ii]
     tab = "  "
@@ -14,23 +15,29 @@ def printstuff1(newtags, prevelement, ii, level, goto, pre):
     lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
     tags = lowertags
     tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
-    inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
+    inbase = [
+        (i, tag, pybecc.get_tags_childrens_tags(baseelement, tag))
+        for (i, tag) in enumerate(tags)
+    ]
     printthis = f"{pre}/{basetag}"
-    length = len(printthis.split('/')) -1
-    print(tab * level, f"{level}.{ii:03d}", printthis, length, end='  --out\n')
+    length = len(printthis.split("/")) - 1
+    print(tab * level, f"{level}.{ii:03d}", printthis, length, end="  --out\n")
     fullpath = pre
     for i, tag, childtags in inbase:
         printhis = f"{pre}/{basetag}/{tag}"
-        length = len(printthis.split('/')) -1
-        print(tab * (level+1), f"{level+1}.{i:03d}", printthis, length, end='  --in\n')
+        length = len(printthis.split("/")) - 1
+        print(
+            tab * (level + 1), f"{level+1}.{i:03d}", printthis, length, end="  --in\n"
+        )
         fullpath = printthis
         for k, childtag in enumerate(childtags):
-            printstuff(childtags, baseelement.find(tag), k, level+2, goto, fullpath)
+            printstuff(childtags, baseelement.find(tag), k, level + 2, goto, fullpath)
     pre = fullpath
     return lowertags, baseelement
 
+
 def printstuff(newtags, prevelement, ii, level, goto, pre):
-    if level > goto+2:
+    if level > goto + 2:
         return None, None
     basetag = newtags[ii]
     tab = "  "
@@ -38,16 +45,26 @@ def printstuff(newtags, prevelement, ii, level, goto, pre):
     lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
     tags = lowertags
     tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
-    inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
-    printthis =  f"{pre}/{basetag}"
-    length = len(printthis.split('/')) -1
+    inbase = [
+        (i, tag, pybecc.get_tags_childrens_tags(baseelement, tag))
+        for (i, tag) in enumerate(tags)
+    ]
+    printthis = f"{pre}/{basetag}"
+    length = len(printthis.split("/")) - 1
     print(tab * level, f"{level}.{ii:03d}", printthis, length)
     for i, tag, childtags in inbase:
         printthis = f"{pre}/{basetag}/{tag}"
-        length = len(printthis.split('/')) -1
-        print(tab * (level+1), f"{level+1}.{i:03d}", printthis, length)
+        length = len(printthis.split("/")) - 1
+        print(tab * (level + 1), f"{level+1}.{i:03d}", printthis, length)
         for k, childtag in enumerate(childtags):
-            printstuff(childtags, baseelement.find(tag), k, level+2, goto, f"{pre}/{basetag}/{tag}")
+            printstuff(
+                childtags,
+                baseelement.find(tag),
+                k,
+                level + 2,
+                goto,
+                f"{pre}/{basetag}/{tag}",
+            )
     return lowertags, baseelement
 
 
@@ -71,13 +88,16 @@ basetag = baseelement.tag
 lowertags = pybecc.get_tags_childrens_tags(prevelement, basetag)
 tags = lowertags
 # tagsinbase = [pybecc.get_tags_childrens_tags(baseelement, tag) for tag in tags]
-inbase = [(i, tag, pybecc.get_tags_childrens_tags(baseelement, tag)) for (i, tag) in enumerate(tags)]
+inbase = [
+    (i, tag, pybecc.get_tags_childrens_tags(baseelement, tag))
+    for (i, tag) in enumerate(tags)
+]
 print(tab * level, f"{level}.{0}", basetag)
 for i, tag, childtags in inbase:
     pre = f"{basetag}/{tag}"
     # print(pre, "\n", end="")
     printthis = pre
-    length = len(printthis.split('/')) -1
-    print(tab * (level+1), f"{level+1}.{i}", printthis,  length)
+    length = len(printthis.split("/")) - 1
+    print(tab * (level + 1), f"{level+1}.{i}", printthis, length)
     for k, childtag in enumerate(childtags):
-        printstuff(childtags, baseelement.find(tag), k, level+2, 10, pre)
+        printstuff(childtags, baseelement.find(tag), k, level + 2, 10, pre)
