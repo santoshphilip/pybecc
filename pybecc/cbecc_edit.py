@@ -69,3 +69,8 @@ def replacefield(elements, field, before=None, after=None):
             if presentvalue == before:
                 subelement.text = after
     return elements
+
+def removelement():
+    """remove an element"""
+    # see ../remove.py and code it here
+    pass
