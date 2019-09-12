@@ -1,3 +1,15 @@
+2019-09-12
+----------
+
+do one for insert note.
+- insert from a text snippet.
+
+write three functions
+copynode(element) - DONE
+nodetostr(element) - DONE
+printelement(element) - DONE
+
+
 2019-07-26
 ----------
 

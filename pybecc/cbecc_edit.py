@@ -1,5 +1,23 @@
 """functions to edit a cbecc file"""
 
+import xml.etree.ElementTree as ET
+
+
+def printelement(element, filehandle=None):
+    """print the element"""
+    elementstr = element2str(element)
+    print(elementstr, file=filehandle)
+    
+def element2str(element):
+    """return the element as a string"""
+    return ET.tostring(element, encoding='unicode')
+
+
+def copyelement(element):
+    """make a copy of the element"""
+    elementstr = element2str(element)
+    tree = ET.ElementTree(ET.fromstring(elementstr))
+    return tree.getroot()
 
 def getcontent(element):
     try:
