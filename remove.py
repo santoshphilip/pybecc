@@ -23,4 +23,3 @@ for space in spaces:
         space.remove(light)
 
 tree.write(finalfile)
-

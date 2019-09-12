@@ -9,7 +9,11 @@ from pybecc import cbecc_edit
 def test_printelement():
     """py.test for printelement"""
     data = (
-    (Tree().treetxt1, "./country/rank", "<rank>0</rank>"), # treetxt, xpath, expected
+        (
+            Tree().treetxt1,
+            "./country/rank",
+            "<rank>0</rank>",
+        ),  # treetxt, xpath, expected
     )
     for treetxt, xpath, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -19,12 +23,16 @@ def test_printelement():
         cbecc_edit.printelement(element, filehandle=fhandle)
         result = fhandle.getvalue()
         assert result.strip() == expected
-        
+
 
 def test_element2str():
     """py.test for element2str"""
     data = (
-    (Tree().treetxt1, "./country/rank", "<rank>0</rank>"), # treetxt, xpath, expected
+        (
+            Tree().treetxt1,
+            "./country/rank",
+            "<rank>0</rank>",
+        ),  # treetxt, xpath, expected
     )
     for treetxt, xpath, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -32,19 +40,21 @@ def test_element2str():
         element = root.find(xpath)
         result = cbecc_edit.element2str(element)
         assert result.strip() == expected
-        
+
 
 def test_copyelement():
     """py.test for copyelement"""
     data = (
-    (Tree().treetxt1, "./country", 
-"""<country name="Liechtenstein">
+        (
+            Tree().treetxt1,
+            "./country",
+            """<country name="Liechtenstein">
         <year>2008</year>
         <gdppc>141100</gdppc>
         <neighbor direction="E" name="Austria" />
         <neighbor direction="W" name="Switzerland" />
-    </country>"""
-    ), # treetxt, xpath, expected
+    </country>""",
+        ),  # treetxt, xpath, expected
     )
     for treetxt, xpath, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -53,12 +63,18 @@ def test_copyelement():
         copied = cbecc_edit.copyelement(element)
         result = cbecc_edit.element2str(copied)
         assert result.strip() == expected
-        assert cbecc_edit.element2str(copied).strip() == cbecc_edit.element2str(element).strip()
+        assert (
+            cbecc_edit.element2str(copied).strip()
+            == cbecc_edit.element2str(element).strip()
+        )
         # make sure that is is a copy,
         cbecc_edit.setfieldvalue(copied, "year", "2009")
-        assert cbecc_edit.element2str(copied).strip() != cbecc_edit.element2str(element).strip()
-        
-    
+        assert (
+            cbecc_edit.element2str(copied).strip()
+            != cbecc_edit.element2str(element).strip()
+        )
+
+
 def test_getcontent():
     """py.test for getcontent"""
     data = (

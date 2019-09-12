@@ -7,10 +7,11 @@ def printelement(element, filehandle=None):
     """print the element"""
     elementstr = element2str(element)
     print(elementstr, file=filehandle)
-    
+
+
 def element2str(element):
     """return the element as a string"""
-    return ET.tostring(element, encoding='unicode')
+    return ET.tostring(element, encoding="unicode")
 
 
 def copyelement(element):
@@ -18,6 +19,7 @@ def copyelement(element):
     elementstr = element2str(element)
     tree = ET.ElementTree(ET.fromstring(elementstr))
     return tree.getroot()
+
 
 def getcontent(element):
     try:
@@ -87,6 +89,7 @@ def replacefield(elements, field, before=None, after=None):
             if presentvalue == before:
                 subelement.text = after
     return elements
+
 
 def removelement():
     """remove an element"""
