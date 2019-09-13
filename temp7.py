@@ -17,7 +17,7 @@ spaces = cbecc_edit.findelements(root, "./Proj/Bldg/Story/Spc")
 space = spaces[0]
 ufloors = cbecc_edit.findelements(space, "./UndgrFlr")
 ufloor = ufloors[0]
-ufloorstr = 
+ufloorstr = str(ufloor)
 # print(ET.tostring(ufloor, encoding='unicode'))
 lastspace = spaces[-1]
 lastspace.append(ufloor)
@@ -26,7 +26,6 @@ ufloors = cbecc_edit.findelements(lastspace, "./UndgrFlr")
 ufloor = ufloors[-1]
 cbecc_edit.setfieldvalue(ufloor, "Name", "Olive Oil")
 tree.write("b.txt")
-
 
 
 #
@@ -46,4 +45,4 @@ tree.write("b.txt")
 #
 #
 
-print( ET.tostring(country, encoding='unicode'))
+print(ET.tostring(country, encoding="unicode"))
