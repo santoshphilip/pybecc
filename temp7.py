@@ -7,6 +7,7 @@ from pybecc import cbecc_edit
 
 
 fname = "./resources/010012-SchSml-CECStd.xml"
+fname = "./resources/tree1.xml"
 
 tree = ET.parse(fname)
 print(f"read {fname}")
@@ -44,3 +45,5 @@ tree.write("b.txt")
 # print( ET.tostring(root, encoding='unicode'))
 #
 #
+
+print( ET.tostring(country, encoding='unicode'))
