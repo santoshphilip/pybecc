@@ -91,6 +91,52 @@ def replacefield(elements, field, before=None, after=None):
     return elements
 
 
+def add_element(parent, newelement):
+    """add a newelement int parent"""
+    # ET.SubElement(doc, "field1", name="blah").text = "some value1"
+    try:
+        name, value, attrib = newelement
+    except ValueError as e:
+        name, value = newelement
+        attrib = dict()
+    ET.SubElement(parent, name, attrib).text = value
+    
+
+def add_indexedelements(parent, elementlist):
+    """add a list of elements that have indexes"""
+    # two type of inputs for elementlist
+    # {("LumRef", "LumCnt"):[("H", 1), ("F12", 4), ("W 1x2", 0)]}
+    # {"Hr":["0.0", "0.0", "0.75", "0.3", "0.0"]}
+    dct = elementlist
+    for key in dct:
+        if isinstance(key, (list, tuple)):
+            # dct = {("LumRef", "LumCnt"):[("H", 1), ("F12", 4), ("W 1x2", 0)]}
+            for i, name in enumerate(key):
+                for index, values in enumerate(dct[key]):
+                    attrib = dict(index=str(index+1))
+                    value = str(values[i])
+                    newelement = (name, value, attrib)
+                    add_element(parent, newelement)
+                    
+        else:
+            # dct = {"Hr":["0.0", "0.0", "0.75", "0.3", "0.0"]}
+            for index, value in enumerate(dct[key]):
+                name = key
+                attrib = dict(index=str(index+1))
+                newelement = (name, value, attrib)
+                add_element(parent, newelement)
+                
+            
+    
+def add_elements(parent, newelements):
+    """add new elements to parent"""
+    for newelement in newelements:
+        if isinstance(newelement, dict):
+            add_indexedelements(parent, newelement)
+        else:
+            add_element(parent, newelement)    
+
+
 def removelement():
     """remove an element"""
     # see ../remove.py and code it here

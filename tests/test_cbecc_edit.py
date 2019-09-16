@@ -285,6 +285,129 @@ def test_setfieldvalue():
         assert result == expected
 
 
+def test_add_element():
+    """py.test for add_element"""
+    data = (
+        (
+            Tree().treetxt3,
+            "./",
+            ("Name", "Gumby"),
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name></data>""",
+        ),  # treetxt, xpath, newelement, expected
+        (
+            Tree().treetxt3,
+            "./",
+            ("Name", "Gumby", {"index": "5"}),
+            """<data>
+    <rank>68</rank>
+<Name index="5">Gumby</Name></data>""",
+        ),  # treetxt, xpath, newelement, expected
+    )
+    for treetxt, xpath, newelement, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        cbecc_edit.add_element(root, newelement)
+        result = cbecc_edit.element2str(root)
+        # print(result)
+        # print('-')
+        # print(expected)
+        # print('=')
+        assert result == expected
+
+def test_add_indexedelements():
+    """py.test for add_indexedelements"""
+    data = (
+    (
+    Tree().treetxt3,
+    "./",
+    {"Hr":["0.0", "1.0"]},
+            """<data>
+    <rank>68</rank>
+<Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>"""
+    ), # treetxt, xpath, elementlist, expected
+    (
+    Tree().treetxt3,
+    "./",
+    {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]},
+            """<data>
+    <rank>68</rank>
+<LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>"""    
+    ), # treetxt, xpath, elementlist, expected
+    )
+    for treetxt, xpath, elementlist, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        cbecc_edit.add_indexedelements(root, elementlist)
+        result = cbecc_edit.element2str(root)
+        # print(result)
+        # print('-')
+        # print(expected)
+        # print('=')
+        assert result == expected
+        
+
+def test_add_elements():
+    """py.test for add_elements"""
+    data = (
+        (
+            Tree().treetxt3,
+            "./",
+            [("Name", "Gumby"), ],
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name></data>""",
+        ),  # treetxt, xpath, newelements, expected
+        (
+            Tree().treetxt3,
+            "./",
+            [("Name", "Gumby"), ("Name2", "Gumby2", {"index":"52"}),],
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name><Name2 index="52">Gumby2</Name2></data>""",
+        ),  # treetxt, xpath, newelements, expected
+        (
+            Tree().treetxt3,
+            "./",
+            [("Name", "Gumby"), {"Hr":["0.0", "1.0"]} ],
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name><Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>""",
+        ),  # treetxt, xpath, newelements, expected
+        (
+            Tree().treetxt3,
+            "./",
+            [("Name", "Gumby"), {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]}],
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name><LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+        ),  # treetxt, xpath, newelements, expected
+        (
+            Tree().treetxt3,
+            "./",
+            [
+                ("Name", "Gumby"), 
+                {"Hr":["0.0", "1.0"]} ,
+                {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]}
+            ],
+            """<data>
+    <rank>68</rank>
+<Name>Gumby</Name><Hr index="1">0.0</Hr><Hr index="2">1.0</Hr><LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+        ),  # treetxt, xpath, newelements, expected
+    )
+    for treetxt, xpath, newelements, expected in data:
+        tree = ET.ElementTree(ET.fromstring(treetxt))
+        root = tree.getroot()
+        cbecc_edit.add_elements(root, newelements)
+        result = cbecc_edit.element2str(root)
+        # print(result)
+        # print('-')
+        # print(expected)
+        # print('=')
+        assert result == expected
+
+
 class Tree(object):
     """holds tree fata for testing"""
 
@@ -366,4 +489,9 @@ class Tree(object):
         <neighbor name="Kochi" direction="W"/>
         <neighbor name="Madurai" direction="S"/>
     </city>
+</data>"""
+        # -----------------------
+        self.treetxt3 = """<?xml version="1.0"?>
+<data>
+    <rank>68</rank>
 </data>"""
