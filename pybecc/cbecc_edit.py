@@ -92,14 +92,16 @@ def replacefield(elements, field, before=None, after=None):
 
 
 def add_element(parent, newelement):
-    """add a newelement int parent"""
+    """add a newelement int parent
+    use this add a single element to the parent"""
     # ET.SubElement(doc, "field1", name="blah").text = "some value1"
     try:
         name, value, attrib = newelement
     except ValueError as e:
         name, value = newelement
         attrib = dict()
-    ET.SubElement(parent, name, attrib).text = value
+    result = ET.SubElement(parent, name, attrib).text = value
+    return result
 
 
 def add_indexedelements(parent, elementlist):
@@ -128,7 +130,8 @@ def add_indexedelements(parent, elementlist):
 
 
 def add_elements(parent, newelements):
-    """add new elements to parent"""
+    """add new elements to parent
+    Use this function to add elements to parent"""
     for newelement in newelements:
         if isinstance(newelement, dict):
             add_indexedelements(parent, newelement)

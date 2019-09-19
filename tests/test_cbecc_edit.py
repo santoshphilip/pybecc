@@ -308,7 +308,8 @@ def test_add_element():
     for treetxt, xpath, newelement, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
         root = tree.getroot()
-        cbecc_edit.add_element(root, newelement)
+        what = cbecc_edit.add_element(root, newelement)
+        print(what)
         result = cbecc_edit.element2str(root)
         # print(result)
         # print('-')

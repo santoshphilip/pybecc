@@ -290,6 +290,7 @@ S-184-1.05_1041 Circulation
         # assert line1 == line2
         assert result.getvalue() == expected
 
+
 def test_get_cbecc_lgt_dct():
     """py.test for get_cbecc_lgt_dct"""
     data = (

@@ -18,7 +18,8 @@ def getlightcounts(zrows, daytype_i, fixturetype_i=2):
 
 
 def lcounts2elements(lcounts, lgtobjname, daylittype):
-    """create the lighting objects that go into IntLtgSys object"""
+    """create the lighting objects that go into IntLtgSys object
+    Dont use this. use splitcounts"""
     elements = []
     if lcounts:
         elements.append(("Name", lgtobjname))
@@ -28,6 +29,8 @@ def lcounts2elements(lcounts, lgtobjname, daylittype):
 
 
 def splitlcounts(lcounts, lgtobjname, daylittype, maxlights=5):
+    """does the same as lcounts2elements, but splits element if it has more
+    than 5 fixtures. use this function instead of lcounts2elements"""
     lcounts_lst = splitlist(lcounts, maxlights)
     manyelements = list()
     for i, acounts in enumerate(lcounts_lst):
@@ -56,7 +59,6 @@ def splitlist(lst, chunk):
     if i < stop:
         splits.append(lst[i:stop])
     return splits
-
 
 
 def space_lightrows(rows, headers=2):
@@ -101,9 +103,10 @@ def get_cbecc_lgt_dct(rows):
             cbecc_lgt_dct.setdefault(zname, list()).append(elements)
     return cbecc_lgt_dct
 
-def get_cbecc_lgt(rows):
+
+def get_cbecc_lgt(rows, maxlights=5):
     """generator yielding (zonename, lightlist) for cbecc xml"""
-    rows = itertools.chain(rows) # allows me to use next() for list or generator
+    rows = itertools.chain(rows)  # allows me to use next() for list or generator
     hrow1 = next(rows)
     hrow2 = next(rows)
     lgtobjname_i = 1
@@ -120,7 +123,10 @@ def get_cbecc_lgt(rows):
             lgtobjname = f"{lgtobjname_preffix}_{suffix}"
             daylittype = hrow2[daytype_i]
             elements = splitlcounts(
-                getlightcounts(zrows, daytype_i), lgtobjname, daylittype
+                getlightcounts(zrows, daytype_i),
+                lgtobjname,
+                daylittype,
+                maxlights=maxlights,
             )
             lightlist.append(elements)
         yield zname, lightlist
