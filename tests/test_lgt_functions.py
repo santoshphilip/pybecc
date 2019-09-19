@@ -418,9 +418,31 @@ S-184-1.05_1041 Circulation
 """,
         ),  # rows, expected
     )
+    # rows is a list
     for rows, expected in data:
-        znames = [row[0] for row in rows[2:] if row[0].strip()]
         cbecc_lgt_gen = lgt_functions.get_cbecc_lgt(rows)
+        result = StringIO()
+        for zname, lightlist in cbecc_lgt_gen:
+            print(zname, file=result)
+            for manyelement in lightlist:
+                for elements in manyelement:
+                    if elements:
+                        print("\t", "IntLtgSys", file=result)
+                        # insert the IntLtgSys here
+                        for element in elements:
+                            print("\t\t", element, file=result)
+                        print(file=result)
+            print(file=result)
+        # for line1, line2 in zip(result.getvalue().splitlines(), expected.splitlines()):
+        #     print(line1)
+        #     print(line2)
+        #     assert line1 == line2
+        assert result.getvalue() == expected
+    # ----
+    # rows as a generator
+    for rows, expected in data:
+        row_generator = (row for row in rows)
+        cbecc_lgt_gen = lgt_functions.get_cbecc_lgt(row_generator)
         result = StringIO()
         for zname, lightlist in cbecc_lgt_gen:
             print(zname, file=result)

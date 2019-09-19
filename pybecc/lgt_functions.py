@@ -1,5 +1,6 @@
 """functions that help to put lights into cbecc.com"""
 
+import itertools
 from io import StringIO
 
 
@@ -74,8 +75,11 @@ def test_splitlist():
 def space_lightrows(rows, headers=2):
     """convert rows to dict {spacename: lightrows, }
     The rows are assigned to each spacename"""
+    rows = itertools.chain(rows)
+    for i in range(headers):
+        next(rows)
     spacelights = []
-    for row in rows[headers:]:
+    for row in rows:
         zname = row[0]
         if zname:
             # prev zname is complete
@@ -112,16 +116,16 @@ def get_cbecc_lgt_dct(rows):
 
 def get_cbecc_lgt(rows):
     """generator yielding (zonename, lightlist) for cbecc xml"""
-    hrow1 = rows[0]
-    hrow2 = rows[1]
+    rows = itertools.chain(rows) # allows me to use next() for list or generator
+    hrow1 = next(rows)
+    hrow2 = next(rows)
     lgtobjname_i = 1
     fixturetype_i = 2
     primary_i = 3
     secondary_i = 4
     nondaylight_i = 5
     daytypes_i = [primary_i, secondary_i, nondaylight_i]
-    # cbecc_lgt_dct = dict()
-    for zname, zrows in space_lightrows(rows):
+    for zname, zrows in space_lightrows(rows, headers=0):
         lightlist = list()
         lgtobjname_preffix = zrows[0][lgtobjname_i]
         for daytype_i in daytypes_i:
