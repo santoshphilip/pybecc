@@ -96,6 +96,20 @@ def test_splitlcounts():
         assert result == expected
 
 
+def test_splitlist():
+    """py.test for splitlist"""
+    data = (
+        ([1, 2, 3], 5, [[1, 2, 3]]),  # lst, chunk, expected
+        ([1, 2, 3], 2, [[1, 2], [3]]),  # lst, chunk, expected
+        ([1, 2, 3, 4], 2, [[1, 2], [3, 4]]),  # lst, chunk, expected
+        ([1, 2, 3], 3, [[1, 2, 3]]),  # lst, chunk, expected
+        ([], 5, [[]]),  # lst, chunk, expected
+    )
+    for lst, chunk, expected in data:
+        result = lgt_functions.splitlist(lst, chunk)
+        assert result == expected
+
+
 def test_space_lightrows():
     """py.test for space_lightrows"""
     data = (
