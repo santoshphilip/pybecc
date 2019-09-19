@@ -275,3 +275,166 @@ S-184-1.05_1041 Circulation
         # print(line2)
         # assert line1 == line2
         assert result.getvalue() == expected
+
+def test_get_cbecc_lgt_dct():
+    """py.test for get_cbecc_lgt_dct"""
+    data = (
+        (
+            [
+                [
+                    "\ufeffMODEL ZONE NAMES",
+                    "lighting Object Names",
+                    "fixture type",
+                    "Primary",
+                    "Secondary",
+                    "nonDaylit",
+                    "",
+                ],
+                [
+                    "",
+                    "",
+                    "",
+                    "PrimarySidelit",
+                    "SecondarySidelit",
+                    "- none -",
+                    "Daylit zone type",
+                ],
+                [
+                    "S-180-1.01_1100 Large Hearing R",
+                    "1.01_1100",
+                    "A1",
+                    "-",
+                    "-",
+                    "12",
+                    "",
+                ],
+                ["", "", "B1", "", "", "2", ""],
+                ["", "", "F_6FT", "", "", "6", "NonDaylit only (more than 5 types)"],
+                ["", "", "D_8FT", "", "", "1", ""],
+                ["", "", "C", "", "", "4", ""],
+                ["", "", "D_26FT", "", "", "1", ""],
+                [
+                    "S-181-1.02_1100 Large Hearing R",
+                    "1.02_1100",
+                    "A1",
+                    "7",
+                    "13",
+                    "",
+                    "",
+                ],
+                ["", "", "B1", "1", "2", "", ""],
+                ["", "", "F_6FT", "3", "6", "", "secondary+primary"],
+                ["", "", "D_8FT", "", "1", "", ""],
+                ["", "", "C", "2", "4", "", ""],
+                [
+                    "S-182-1.03_1100 Large Hearing R",
+                    "1.03_1100",
+                    "A1",
+                    "10",
+                    "",
+                    "",
+                    "",
+                ],
+                ["", "", "B1", "8", "", "", ""],
+                ["", "", "D_24FT", "1", "", "", "primary only"],
+                ["", "", "D_25FT", "1", "", "", ""],
+                ["", "", "F_6FT", "4", "", "", ""],
+                ["", "", "D_5FT", "1", "", "", ""],
+                ["", "", "D_4FT", "1", "", "", ""],
+                ["", "", "EX1", "9", "", "", ""],
+                ["", "", "T", "1", "", "", ""],
+                [
+                    "S-183-1.04_1030 Circulation",
+                    "1.04_1030",
+                    "W",
+                    "",
+                    "",
+                    "16",
+                    "NonDaylit only (less than 5 types)",
+                ],
+                ["S-184-1.05_1041 Circulation", "1.05_1041", "W", "2", "", "4", ""],
+                ["", "", "H1A", "", "1", "1", "primary+secondary+nonDaylit"],
+            ],
+            """S-180-1.01_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.01_1100_nonDaylit_1')
+		 {('LumRef', 'LumCnt'): [('A1', 12), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', '- none -')
+
+	 IntLtgSys
+		 ('Name', '1.01_1100_nonDaylit_2')
+		 {('LumRef', 'LumCnt'): [('D_26FT', 1)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-181-1.02_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.02_1100_Primary')
+		 {('LumRef', 'LumCnt'): [('A1', 7), ('B1', 1), ('F_6FT', 3), ('C', 2)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.02_1100_Secondary')
+		 {('LumRef', 'LumCnt'): [('A1', 13), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', 'SecondarySidelit')
+
+
+S-182-1.03_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.03_1100_Primary_1')
+		 {('LumRef', 'LumCnt'): [('A1', 10), ('B1', 8), ('D_24FT', 1), ('D_25FT', 1), ('F_6FT', 4)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.03_1100_Primary_2')
+		 {('LumRef', 'LumCnt'): [('D_5FT', 1), ('D_4FT', 1), ('EX1', 9), ('T', 1)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+
+S-183-1.04_1030 Circulation
+	 IntLtgSys
+		 ('Name', '1.04_1030_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('W', 16)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-184-1.05_1041 Circulation
+	 IntLtgSys
+		 ('Name', '1.05_1041_Primary')
+		 {('LumRef', 'LumCnt'): [('W', 2)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.05_1041_Secondary')
+		 {('LumRef', 'LumCnt'): [('H1A', 1)]}
+		 ('DaylitAreaType', 'SecondarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.05_1041_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('W', 4), ('H1A', 1)]}
+		 ('DaylitAreaType', '- none -')
+
+
+""",
+        ),  # rows, expected
+    )
+    for rows, expected in data:
+        znames = [row[0] for row in rows[2:] if row[0].strip()]
+        cbecc_lgt_gen = lgt_functions.get_cbecc_lgt(rows)
+        result = StringIO()
+        for zname, lightlist in cbecc_lgt_gen:
+            print(zname, file=result)
+            for manyelement in lightlist:
+                for elements in manyelement:
+                    if elements:
+                        print("\t", "IntLtgSys", file=result)
+                        # insert the IntLtgSys here
+                        for element in elements:
+                            print("\t\t", element, file=result)
+                        print(file=result)
+            print(file=result)
+        # for line1, line2 in zip(result.getvalue().splitlines(), expected.splitlines()):
+        #     print(line1)
+        #     print(line2)
+        #     assert line1 == line2
+        assert result.getvalue() == expected
