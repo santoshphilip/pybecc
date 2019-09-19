@@ -316,25 +316,26 @@ def test_add_element():
         # print('=')
         assert result == expected
 
+
 def test_add_indexedelements():
     """py.test for add_indexedelements"""
     data = (
-    (
-    Tree().treetxt3,
-    "./",
-    {"Hr":["0.0", "1.0"]},
+        (
+            Tree().treetxt3,
+            "./",
+            {"Hr": ["0.0", "1.0"]},
             """<data>
     <rank>68</rank>
-<Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>"""
-    ), # treetxt, xpath, elementlist, expected
-    (
-    Tree().treetxt3,
-    "./",
-    {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]},
+<Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>""",
+        ),  # treetxt, xpath, elementlist, expected
+        (
+            Tree().treetxt3,
+            "./",
+            {("LumRef", "LumCnt"): [("H", 1), ("F12", 4)]},
             """<data>
     <rank>68</rank>
-<LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>"""    
-    ), # treetxt, xpath, elementlist, expected
+<LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+        ),  # treetxt, xpath, elementlist, expected
     )
     for treetxt, xpath, elementlist, expected in data:
         tree = ET.ElementTree(ET.fromstring(treetxt))
@@ -346,7 +347,7 @@ def test_add_indexedelements():
         # print(expected)
         # print('=')
         assert result == expected
-        
+
 
 def test_add_elements():
     """py.test for add_elements"""
@@ -354,7 +355,7 @@ def test_add_elements():
         (
             Tree().treetxt3,
             "./",
-            [("Name", "Gumby"), ],
+            [("Name", "Gumby")],
             """<data>
     <rank>68</rank>
 <Name>Gumby</Name></data>""",
@@ -362,7 +363,7 @@ def test_add_elements():
         (
             Tree().treetxt3,
             "./",
-            [("Name", "Gumby"), ("Name2", "Gumby2", {"index":"52"}),],
+            [("Name", "Gumby"), ("Name2", "Gumby2", {"index": "52"})],
             """<data>
     <rank>68</rank>
 <Name>Gumby</Name><Name2 index="52">Gumby2</Name2></data>""",
@@ -370,7 +371,7 @@ def test_add_elements():
         (
             Tree().treetxt3,
             "./",
-            [("Name", "Gumby"), {"Hr":["0.0", "1.0"]} ],
+            [("Name", "Gumby"), {"Hr": ["0.0", "1.0"]}],
             """<data>
     <rank>68</rank>
 <Name>Gumby</Name><Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>""",
@@ -378,7 +379,7 @@ def test_add_elements():
         (
             Tree().treetxt3,
             "./",
-            [("Name", "Gumby"), {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]}],
+            [("Name", "Gumby"), {("LumRef", "LumCnt"): [("H", 1), ("F12", 4)]}],
             """<data>
     <rank>68</rank>
 <Name>Gumby</Name><LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
@@ -387,9 +388,9 @@ def test_add_elements():
             Tree().treetxt3,
             "./",
             [
-                ("Name", "Gumby"), 
-                {"Hr":["0.0", "1.0"]} ,
-                {("LumRef", "LumCnt"):[("H", 1), ("F12", 4)]}
+                ("Name", "Gumby"),
+                {"Hr": ["0.0", "1.0"]},
+                {("LumRef", "LumCnt"): [("H", 1), ("F12", 4)]},
             ],
             """<data>
     <rank>68</rank>

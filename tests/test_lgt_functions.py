@@ -4,6 +4,7 @@ from io import StringIO
 
 from pybecc import lgt_functions
 
+
 def test_getlightcounts():
     """py.test for getlightcounts"""
     data = (
