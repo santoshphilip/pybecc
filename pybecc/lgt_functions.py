@@ -79,6 +79,28 @@ def space_lightrows(rows, headers=2):
         spacelights.append(row)
     yield znamenow, spacelights
 
+    
+def spaceroom_lightrows(rows, headers=2):
+    """convert rows to dict {spacename: lightrows, }
+    The rows are assigned to each spacename"""
+    rows = itertools.chain(rows)
+    for i in range(headers):
+        next(rows)
+    spacelights = []
+    for row in rows:
+        zname = row[0].strip()
+        rname = row[1].strip()
+        if rname:
+            # prev zname and rname are complete
+            if spacelights:
+                yield (znamenow, rnamenow), spacelights
+                spacelights = []
+            if zname:
+                znamenow = zname
+            rnamenow = rname
+        spacelights.append(row)
+    yield (znamenow, rnamenow), spacelights
+
 
 def get_cbecc_lgt_dct(rows):
     """return lighting dct for input into cbecc xml"""
