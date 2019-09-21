@@ -295,10 +295,12 @@ def test_get_cbecc_lgt_dct():
 	 IntLtgSys
 		 ('Name', '1.01_1100_nonDaylit_1')
 		 {('LumRef', 'LumCnt'): [('A1', 12), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', '- none -')
 
 	 IntLtgSys
 		 ('Name', '1.01_1100_nonDaylit_2')
 		 {('LumRef', 'LumCnt'): [('D_26FT', 1)]}
+		 ('DaylitAreaType', '- none -')
 
 
 S-181-1.02_1100 Large Hearing R
@@ -329,6 +331,7 @@ S-183-1.04_1030 Circulation
 	 IntLtgSys
 		 ('Name', '1.04_1030_nonDaylit')
 		 {('LumRef', 'LumCnt'): [('W', 16)]}
+		 ('DaylitAreaType', '- none -')
 
 
 S-184-1.05_1041 Circulation
@@ -345,6 +348,7 @@ S-184-1.05_1041 Circulation
 	 IntLtgSys
 		 ('Name', '1.05_1041_nonDaylit')
 		 {('LumRef', 'LumCnt'): [('W', 4), ('H1A', 1)]}
+		 ('DaylitAreaType', '- none -')
 
 
 """,
@@ -455,10 +459,12 @@ def test_get_cbecc_lgt_dct():
 	 IntLtgSys
 		 ('Name', '1.01_1100_nonDaylit_1')
 		 {('LumRef', 'LumCnt'): [('A1', 12), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', '- none -')
 
 	 IntLtgSys
 		 ('Name', '1.01_1100_nonDaylit_2')
 		 {('LumRef', 'LumCnt'): [('D_26FT', 1)]}
+		 ('DaylitAreaType', '- none -')
 
 
 S-181-1.02_1100 Large Hearing R
@@ -489,6 +495,7 @@ S-183-1.04_1030 Circulation
 	 IntLtgSys
 		 ('Name', '1.04_1030_nonDaylit')
 		 {('LumRef', 'LumCnt'): [('W', 16)]}
+		 ('DaylitAreaType', '- none -')
 
 
 S-184-1.05_1041 Circulation
@@ -505,6 +512,7 @@ S-184-1.05_1041 Circulation
 	 IntLtgSys
 		 ('Name', '1.05_1041_nonDaylit')
 		 {('LumRef', 'LumCnt'): [('W', 4), ('H1A', 1)]}
+		 ('DaylitAreaType', '- none -')
 
 
 """,

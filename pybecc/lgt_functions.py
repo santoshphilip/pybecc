@@ -24,8 +24,8 @@ def lcounts2elements(lcounts, lgtobjname, daylittype):
     if lcounts:
         elements.append(("Name", lgtobjname))
         elements.append({("LumRef", "LumCnt"): lcounts})
-        if daylittype != "- none -":
-            elements.append(("DaylitAreaType", daylittype))
+        # if daylittype != "- none -":
+        elements.append(("DaylitAreaType", daylittype))
     return elements
 
 
