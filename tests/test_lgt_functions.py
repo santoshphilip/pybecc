@@ -203,6 +203,22 @@ def test_spaceroom_lightrows():
                 (("Gumby1", "room33"), [["", "room33", 22], ]),
             ],
         ),  # rows, headers, expected
+        (
+            [
+                ["header1"],
+                ["Gumby", "room1", 0],
+                ["", "room2", 2],
+                ["", "room3", 11],
+                ["", "room4", 22],
+            ],
+            1,
+            [
+                (("Gumby", "room1"), [["Gumby", "room1", 0], ]),
+                (("Gumby", "room2"), [["", "room2", 2], ]),
+                (("Gumby", "room3"), [["", "room3", 11], ]),
+                (("Gumby", "room4"), [["", "room4", 22], ]),
+            ],
+        ),  # rows, headers, expected
     )
     for rows, headers, expected in data:
         result = list(lgt_functions.spaceroom_lightrows(rows, headers))
