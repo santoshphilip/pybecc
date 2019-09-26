@@ -327,7 +327,7 @@ def test_add_indexedelements():
             {"Hr": ["0.0", "1.0"]},
             """<data>
     <rank>68</rank>
-<Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>""",
+<Hr index="0">0.0</Hr><Hr index="1">1.0</Hr></data>""",
         ),  # treetxt, xpath, elementlist, expected
         (
             Tree().treetxt3,
@@ -335,7 +335,7 @@ def test_add_indexedelements():
             {("LumRef", "LumCnt"): [("H", 1), ("F12", 4)]},
             """<data>
     <rank>68</rank>
-<LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+<LumRef index="0">H</LumRef><LumRef index="1">F12</LumRef><LumCnt index="0">1</LumCnt><LumCnt index="1">4</LumCnt></data>""",
         ),  # treetxt, xpath, elementlist, expected
     )
     for treetxt, xpath, elementlist, expected in data:
@@ -375,7 +375,7 @@ def test_add_elements():
             [("Name", "Gumby"), {"Hr": ["0.0", "1.0"]}],
             """<data>
     <rank>68</rank>
-<Name>Gumby</Name><Hr index="1">0.0</Hr><Hr index="2">1.0</Hr></data>""",
+<Name>Gumby</Name><Hr index="0">0.0</Hr><Hr index="1">1.0</Hr></data>""",
         ),  # treetxt, xpath, newelements, expected
         (
             Tree().treetxt3,
@@ -383,7 +383,7 @@ def test_add_elements():
             [("Name", "Gumby"), {("LumRef", "LumCnt"): [("H", 1), ("F12", 4)]}],
             """<data>
     <rank>68</rank>
-<Name>Gumby</Name><LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+<Name>Gumby</Name><LumRef index="0">H</LumRef><LumRef index="1">F12</LumRef><LumCnt index="0">1</LumCnt><LumCnt index="1">4</LumCnt></data>""",
         ),  # treetxt, xpath, newelements, expected
         (
             Tree().treetxt3,
@@ -395,7 +395,7 @@ def test_add_elements():
             ],
             """<data>
     <rank>68</rank>
-<Name>Gumby</Name><Hr index="1">0.0</Hr><Hr index="2">1.0</Hr><LumRef index="1">H</LumRef><LumRef index="2">F12</LumRef><LumCnt index="1">1</LumCnt><LumCnt index="2">4</LumCnt></data>""",
+<Name>Gumby</Name><Hr index="0">0.0</Hr><Hr index="1">1.0</Hr><LumRef index="0">H</LumRef><LumRef index="1">F12</LumRef><LumCnt index="0">1</LumCnt><LumCnt index="1">4</LumCnt></data>""",
         ),  # treetxt, xpath, newelements, expected
     )
     for treetxt, xpath, newelements, expected in data:

@@ -115,7 +115,7 @@ def add_indexedelements(parent, elementlist):
             # dct = {("LumRef", "LumCnt"):[("H", 1), ("F12", 4), ("W 1x2", 0)]}
             for i, name in enumerate(key):
                 for index, values in enumerate(dct[key]):
-                    attrib = dict(index=str(index + 1))
+                    attrib = dict(index=str(index))
                     value = str(values[i])
                     newelement = (name, value, attrib)
                     add_element(parent, newelement)
@@ -124,7 +124,7 @@ def add_indexedelements(parent, elementlist):
             # dct = {"Hr":["0.0", "0.0", "0.75", "0.3", "0.0"]}
             for index, value in enumerate(dct[key]):
                 name = key
-                attrib = dict(index=str(index + 1))
+                attrib = dict(index=str(index))
                 newelement = (name, value, attrib)
                 add_element(parent, newelement)
 
