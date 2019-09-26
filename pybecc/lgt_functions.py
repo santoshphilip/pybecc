@@ -113,7 +113,7 @@ def get_cbecc_lgt_dct(rows):
     nondaylight_i = 5
     daytypes_i = [primary_i, secondary_i, nondaylight_i]
     cbecc_lgt_dct = dict()
-    for zname, zrows in space_lightrows(rows):
+    for zname, zrows in spaceroom_lightrows(rows):
         lgtobjname_preffix = zrows[0][lgtobjname_i]
         for daytype_i in daytypes_i:
             suffix = hrow1[daytype_i]
@@ -137,9 +137,9 @@ def get_cbecc_lgt(rows, maxlights=5):
     secondary_i = 4
     nondaylight_i = 5
     daytypes_i = [primary_i, secondary_i, nondaylight_i]
-    for zname, zrows in space_lightrows(rows, headers=0):
+    for (zname, lgtobjname_preffix), zrows in spaceroom_lightrows(rows, headers=0):
         lightlist = list()
-        lgtobjname_preffix = zrows[0][lgtobjname_i]
+        # lgtobjname_preffix = zrows[0][lgtobjname_i]
         for daytype_i in daytypes_i:
             suffix = hrow1[daytype_i]
             lgtobjname = f"{lgtobjname_preffix}_{suffix}"

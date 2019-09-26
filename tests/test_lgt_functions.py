@@ -1,6 +1,7 @@
 """py.test for lgt_functions.py"""
 
 from io import StringIO
+from operator import itemgetter, attrgetter   
 
 from pybecc import lgt_functions
 
@@ -205,10 +206,10 @@ def test_spaceroom_lightrows():
     )
     for rows, headers, expected in data:
         result = list(lgt_functions.spaceroom_lightrows(rows, headers))
-        print(result)
-        print("-")
-        print(expected)
-        print("=")
+        # print(result)
+        # print("-")
+        # print(expected)
+        # print("=")
         assert result == expected
 
 
@@ -353,14 +354,69 @@ S-184-1.05_1041 Circulation
 
 """,
         ),  # rows, expected
+        (
+[['\ufeffMODEL ZONE NAMES',
+  'lighting Object Names',
+  'fixture type',
+  'Primary',
+  'Secondary',
+  'nonDaylit',
+  ''],
+ ['',
+  '',
+  '',
+  'PrimarySidelit',
+  'SecondarySidelit',
+  '- none -',
+  'Daylit zone type'],
+ ['S-180-1.01_1100 Large Hearing R', '1.01_1100', 'A1', '-', '-', '12', ''],
+ ['', '', 'B1', '', '', '2', ''],
+ ['', '', 'F_6FT', '', '', '6', 'NonDaylit only (more than 5 types)'],
+ ['', '1.01_XXXX', 'D_8FT', '', '', '1', ''],
+ ['', '', 'C', '', '', '4', ''],
+ ['S-181-1.02_1100 Large Hearing R', '1.02_1100', 'A1', '7', '13', '', ''],
+ ['', '', 'B1', '1', '2', '', ''],
+ ['', '', 'F_6FT', '3', '6', '', 'secondary+primary'],
+ ['', '', 'D_8FT', '', '1', '', ''],
+ ['', '', 'C', '2', '4', '', '']],
+  """S-180-1.01_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.01_1100_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('A1', 12), ('B1', 2), ('F_6FT', 6)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-180-1.01_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.01_XXXX_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-181-1.02_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.02_1100_Primary')
+		 {('LumRef', 'LumCnt'): [('A1', 7), ('B1', 1), ('F_6FT', 3), ('C', 2)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.02_1100_Secondary')
+		 {('LumRef', 'LumCnt'): [('A1', 13), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', 'SecondarySidelit')
+
+
+""",
+        ),  # rows, expected
     )
     for rows, expected in data:
         znames = [row[0] for row in rows[2:] if row[0].strip()]
         cbecc_lgt_dct = lgt_functions.get_cbecc_lgt_dct(rows)
+        okeys = cbecc_lgt_dct.keys()
+        keys = sorted(okeys, key= lambda x: znames.index(itemgetter(0)(x))) # sort in the order of znames
         result = StringIO()
-        for zname in znames:
+        for zname, rname in keys:
             print(zname, file=result)
-            for manyelement in cbecc_lgt_dct[zname]:
+            for manyelement in cbecc_lgt_dct[(zname, rname)]:
                 for elements in manyelement:
                     if elements:
                         print("\t", "IntLtgSys", file=result)
@@ -376,8 +432,8 @@ S-184-1.05_1041 Circulation
         assert result.getvalue() == expected
 
 
-def test_get_cbecc_lgt_dct():
-    """py.test for get_cbecc_lgt_dct"""
+def test_get_cbecc_lgt():
+    """py.test for get_cbecc_lgt"""
     data = (
         (
             [
@@ -517,9 +573,66 @@ S-184-1.05_1041 Circulation
 
 """,
         ),  # rows, expected
+        (
+[['\ufeffMODEL ZONE NAMES',
+  'lighting Object Names',
+  'fixture type',
+  'Primary',
+  'Secondary',
+  'nonDaylit',
+  ''],
+ ['',
+  '',
+  '',
+  'PrimarySidelit',
+  'SecondarySidelit',
+  '- none -',
+  'Daylit zone type'],
+ ['S-180-1.01_1100 Large Hearing R', '1.01_1100', 'A1', '-', '-', '12', ''],
+ ['', '', 'B1', '', '', '2', ''],
+ ['', '', 'F_6FT', '', '', '6', 'NonDaylit only (more than 5 types)'],
+ ['', '1.01_XXXX', 'D_8FT', '', '', '1', ''],
+ ['', '', 'C', '', '', '4', ''],
+ ['S-181-1.02_1100 Large Hearing R', '1.02_1100', 'A1', '7', '13', '', ''],
+ ['', '', 'B1', '1', '2', '', ''],
+ ['', '', 'F_6FT', '3', '6', '', 'secondary+primary'],
+ ['', '', 'D_8FT', '', '1', '', ''],
+ ['', '', 'C', '2', '4', '', '']],
+  """S-180-1.01_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.01_1100_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('A1', 12), ('B1', 2), ('F_6FT', 6)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-180-1.01_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.01_XXXX_nonDaylit')
+		 {('LumRef', 'LumCnt'): [('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', '- none -')
+
+
+S-181-1.02_1100 Large Hearing R
+	 IntLtgSys
+		 ('Name', '1.02_1100_Primary')
+		 {('LumRef', 'LumCnt'): [('A1', 7), ('B1', 1), ('F_6FT', 3), ('C', 2)]}
+		 ('DaylitAreaType', 'PrimarySidelit')
+
+	 IntLtgSys
+		 ('Name', '1.02_1100_Secondary')
+		 {('LumRef', 'LumCnt'): [('A1', 13), ('B1', 2), ('F_6FT', 6), ('D_8FT', 1), ('C', 4)]}
+		 ('DaylitAreaType', 'SecondarySidelit')
+
+
+""",
+        ),  # rows, expected
     )
     # rows is a list
     for rows, expected in data:
+        # import csv
+        # csv_writer = csv.writer(open('a1.csv', 'w'))
+        # for row in rows:
+        #     csv_writer.writerow(row)
         cbecc_lgt_gen = lgt_functions.get_cbecc_lgt(rows)
         result = StringIO()
         for zname, lightlist in cbecc_lgt_gen:

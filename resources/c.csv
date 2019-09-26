@@ -1,0 +1,12 @@
+﻿MODEL ZONE NAMES,lighting Object Names,fixture type,Primary,Secondary,nonDaylit,
+,,,PrimarySidelit,SecondarySidelit,- none -,Daylit zone type
+S-180-1.01_1100 Large Hearing R,1.01_1100,A1,-,-,12,
+,,B1,,,2,
+,,F_6FT,,,6,NonDaylit only (more than 5 types)
+,1.01_XXXX,D_8FT,,,1,
+,,C,,,4,
+S-181-1.02_1100 Large Hearing R,1.02_1100,A1,7,13,,
+,,B1,1,2,,
+,,F_6FT,3,6,,secondary+primary
+,,D_8FT,,1,,
+,,C,2,4,,
